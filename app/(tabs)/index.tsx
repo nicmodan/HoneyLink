@@ -20,12 +20,12 @@ export default function HomeScreen() {
             Find Your Perfect March
           </Text>
           <Pressable style={{marginBottom: 10, backgroundColor: "pink", borderRadius: 10}}>
-            <Text style={{color: '#000000', fontSize: 18, fontWeight: 'bold'}}></Text>
+            <Text style={{color: '#000000', fontSize: 18, fontWeight: 'bold'}}>
               Get Started
             </Text>
           </Pressable>
           <Pressable style={{marginBottom: 10, backgroundColor: "gray", borderRadius: 10}}>
-            <Text style={{color: '#000000', fontSize: 18, fontWeight: 'bold'}}></Text>
+            <Text style={{color: '#000000', fontSize: 18, fontWeight: 'bold'}}>
               Get Started
             </Text>
           </Pressable>
