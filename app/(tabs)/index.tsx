@@ -1,20 +1,10 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet, StatusBar } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-// import { Text } from '@react-navigation/elements';
-import { View, Text, TextInput, Pressable  } from 'react-native';
-
+import { Platform, StyleSheet, StatusBar, View, Text, Pressable } from 'react-native';
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-
         <View style={styles.centerTextContainer}>
           <Text style={styles.displayText}>
             Find Your Perfect March
@@ -29,13 +19,8 @@ export default function HomeScreen() {
               Get Started
             </Text>
           </Pressable>
-
         </View>
-        
-       
-
       </View>
-      
     </View>
   );
 }
@@ -49,9 +34,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     height: '100%',
-    backgroundImage: 'url(../assets/images/frontimage.png)',
-    // backgroundSize: 'cover',
-    // backgroundAttachment: 'fixed',
+    // backgroundImage: 'url(../assets/images/frontimage.png)',
     ...Platform.select({
       ios:{
         paddingTop: 25
@@ -67,16 +50,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     width: '100%',
-    height: '100vh',
-    backgroundImage: 'url(../assets/images/frontimage.png)',
-    // backgroundColor: 'rgba(197, 43, 43, 0.17)', // Adjust the opacity as needed
+    height: '100%',
+    // backgroundImage: 'url(../assets/images/frontimage.png)',
   },
-  cneterTextContiner: {
-    flex: 1,
+  centerTextContainer: {
     alignItems: 'center',
     justifyContent: 'center', 
     width: '85%',
-    height: '50%'
   },
   displayText:{
     fontSize: 30,
@@ -85,5 +65,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   }
-
 });
+
