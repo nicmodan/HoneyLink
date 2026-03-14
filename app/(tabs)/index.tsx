@@ -1,89 +1,80 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet, StatusBar } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-// import { Text } from '@react-navigation/elements';
-import { View, Text, TextInput, Pressable  } from 'react-native';
-
+import { router } from 'expo-router';
+import { ImageBackground, Platform, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
+    <ImageBackground
+      source={require('../../assets/images/frontimage.png')}
+      resizeMode="cover"
+      style={styles.background}>
+      <View style={styles.overlay} />
 
-        <View style={styles.centerTextContainer}>
-          <Text style={styles.displayText}>
-            Find Your Perfect March
-          </Text>
-          <Pressable style={{marginBottom: 10, backgroundColor: "pink", borderRadius: 10}}>
-            <Text style={{color: '#000000', fontSize: 18, fontWeight: 'bold'}}>
-              Get Started
-            </Text>
-          </Pressable>
-          <Pressable style={{marginBottom: 10, backgroundColor: "gray", borderRadius: 10}}>
-            <Text style={{color: '#000000', fontSize: 18, fontWeight: 'bold'}}>
-              Get Started
-            </Text>
-          </Pressable>
+      <View style={styles.content}>
+        <Text style={styles.displayText}>Find Your Perfect Match Today</Text>
 
-        </View>
-        
-       
+        <Pressable style={styles.primaryButton} onPress={() => router.push('/login')}>
+          <Text style={styles.primaryButtonText}>Login</Text>
+        </Pressable>
 
+        <Pressable style={styles.secondaryButton} onPress={() => router.push('/signing')}>
+          <Text style={styles.secondaryButtonText}>Signup</Text>
+        </Pressable>
       </View>
-      
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(223, 51, 110, 0.34)',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 24,
+    paddingBottom: 72,
+    paddingTop: Platform.select({
+      ios: 48,
+      android: (StatusBar.currentHeight ?? 0) + 24,
+      default: 24,
+    }),
+  },
+  displayText: {
+    maxWidth: 240,
+    marginBottom: 28,
+    fontSize: 42,
+    fontWeight: '800',
+    lineHeight: 46,
+    color: '#FFFFFF',
+  },
+  primaryButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    backgroundImage: 'url(../assets/images/frontimage.png)',
-    // backgroundSize: 'cover',
-    // backgroundAttachment: 'fixed',
-    ...Platform.select({
-      ios:{
-        paddingTop: 25
-      },
-      android: {
-        paddingTop: StatusBar.currentHeight
-      }
-    })
+    minHeight: 52,
+    marginBottom: 14,
+    borderRadius: 999,
+    backgroundColor: '#ff2b78',
   },
-  innerContainer: {
-    flex: 1,
+  primaryButtonText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  secondaryButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    width: '100%',
-    height: '100vh',
-    backgroundImage: 'url(../assets/images/frontimage.png)',
-    // backgroundColor: 'rgba(197, 43, 43, 0.17)', // Adjust the opacity as needed
+    minHeight: 52,
+    borderRadius: 999,
+    backgroundColor: '#FFFFFF',
   },
-  cneterTextContiner: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center', 
-    width: '85%',
-    height: '50%'
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#3A3A3A',
   },
-  displayText:{
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#000000',
-    textAlign: 'center',
-    marginBottom: 20,
-  }
-
 });
