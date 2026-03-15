@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "HoneyLink",
-    "slug": "HoneyLink",
+    "name": "x-clone",
+    "slug": "x-clone",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Logo.png",
-    "scheme": "honeylink",
+    "icon": "./assets/images/icon.png",
+    "scheme": "xclone",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -13,23 +13,24 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "white",
-        "foregroundImage": "./assets/images/Logo.jpeg",
-        "monochromeImage": "./assets/images/Logo.jpeg"
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/Logo.jpeg"
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          // "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
