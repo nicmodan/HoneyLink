@@ -3,9 +3,13 @@
     "name": "HoneyLink",
     "slug": "HoneyLink",
     "version": "1.0.0",
+    "scheme": "honeylink",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "plugins": [
+      "expo-router"
+    ],
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
