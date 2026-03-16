@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import styles from '../style';
 
 function Divider() {
   return (
@@ -13,84 +14,34 @@ function Divider() {
 
 function FacebookButton({ onPress }) {
   return (
-    <TouchableOpacity style={[styles.button, styles.facebook]} onPress={onPress}>
-      <Text style={styles.buttonText}>Sign up with Facebook</Text>
+    <TouchableOpacity style={[styles.socialButton, styles.facebook]} onPress={onPress}>
+      <View style={styles.facebookContent}>
+        <Text style={styles.facebookIcon}>f</Text>
+        <Text style={styles.buttonText}>Sign up with Facebook</Text>
+      </View>
     </TouchableOpacity>
   );
 }
 
-function AppleButton({ onPress }) {
+function GmailButton({ onPress }) {
   return (
-    <TouchableOpacity style={[styles.button, styles.apple]} onPress={onPress}>
-      <Text style={styles.buttonText}>Sign up with Apple</Text>
+    <TouchableOpacity style={[styles.socialButton, styles.gmail]} onPress={onPress}>
+      <Text style={styles.gmailText}>Sign up with Gmail</Text>
     </TouchableOpacity>
   );
 }
 
-function SignupLink({ onPress }) {
-  return (
-    <TouchableOpacity style={styles.signupLink} onPress={onPress}>
-      <Text style={styles.signupText}>Don't have an account? Sign up</Text>
-    </TouchableOpacity>
-  );
+function TermsText() {
+  return <Text style={styles.termsText}>Terms of Use & Privacy Policy</Text>;
 }
 
-export default function SocialLogin({ onFacebookPress, onApplePress, onSignupPress }) {
+export default function SocialLogin({ onFacebookPress, onGmailPress }) {
   return (
-    <View style={styles.container}>
+    <View style={styles.socialLoginContainer}>
       <Divider />
       <FacebookButton onPress={onFacebookPress} />
-      <AppleButton onPress={onApplePress} />
-      <SignupLink onPress={onSignupPress} />
+      <GmailButton onPress={onGmailPress} />
+      <TermsText />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    gap: 16,
-  },
-  dividerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  divider: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#D1D5DB',
-  },
-  dividerLabel: {
-    textTransform: 'uppercase',
-    fontSize: 12,
-    color: '#6B7280',
-  },
-  button: {
-    height: 48,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  facebook: {
-    backgroundColor: '#1877F2',
-  },
-  apple: {
-    backgroundColor: '#000',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  signupLink: {
-    marginTop: 8,
-    alignItems: 'center',
-  },
-  signupText: {
-    fontSize: 14,
-    color: '#2563EB',
-  },
-});
