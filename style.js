@@ -53,5 +53,4 @@ export default StyleSheet.create({
     color: '#666',
     marginTop: 5,
   },
-
 })
