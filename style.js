@@ -6,36 +6,52 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: Platform.OS === "android" ? 40 : 0,
-  },
-  text: {
-    fontSize: 16,
-    color: "#333",
-  },
-  
-  // My New Styles Start Here
-  headerContainer: {
-    paddingTop: 50,
+    alignItems: "stretch",
+    justifyContent: "flex-start",
+    paddingTop: Platform.OS === "android" ? 40 : 40,
     paddingHorizontal: 20,
-    backgroundColor: '#fff',
+  },
+
+  
+  // Header Section Styles - by DARE
+  headerContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingTop: 10,
     width: '100%',
   },
-  backButton: {
-    marginBottom: 20,
+
+  headerContainer2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '60%',
   },
-  textContainer: {
+
+  backButton: {
+    marginBottom: 8,
+    left: -10,
+  },
+
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#111',
     marginBottom: 10,
   },
+
   welcomeText: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '700',
     color: '#333',
+    marginTop: 12,
   },
+
   subText: {
     fontSize: 16,
     color: '#666',
     marginTop: 5,
   },
+
 })
