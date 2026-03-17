@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // import { Image } from 'expo-image';
 import { Platform, StyleSheet, StatusBar } from 'react-native';
 import { Link } from 'expo-router';
@@ -24,7 +23,6 @@ export default function HomeScreen() {
               <Text>Sign Up</Text>
             </Button>
           </View>
-=======
 import { router } from "expo-router";
 import {
   ImageBackground,
@@ -61,7 +59,6 @@ export default function HomeScreen() {
         >
           <Text style={styles.secondaryButtonText}>Signup</Text>
         </Pressable>
->>>>>>> favour
       </View>
     </ImageBackground>
   );
@@ -95,7 +92,6 @@ const styles = StyleSheet.create({
     lineHeight: 46,
     color: "#FFFFFF",
   },
-<<<<<<< HEAD
   subContainer: {
     position: 'absolute',
     top: 0,
@@ -116,7 +112,6 @@ const styles = StyleSheet.create({
   }
 
 });
-=======
   primaryButton: {
     alignItems: "center",
     justifyContent: "center",
@@ -143,4 +138,3 @@ const styles = StyleSheet.create({
     color: "#3A3A3A",
   },
 });
->>>>>>> favour
