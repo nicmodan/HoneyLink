@@ -1,14 +1,15 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
+import { useRouter } from 'expo-router';
+import { Text, TouchableOpacity, View } from 'react-native';
 import styles from '../style';
 
 const HeaderSection = () => {
+  const router = useRouter();
   return (
     <View style={styles.headerContainer}>
       <View style={styles.headerContainer2}>        
-        <TouchableOpacity style={styles.backButton}>
-          <Entypo name="chevron-left" size={35} color="black" />
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Entypo name="chevron-left" size={30} color="black" />
         </TouchableOpacity>     
         <Text style={styles.headerTitle}>Login</Text> 
       </View>
