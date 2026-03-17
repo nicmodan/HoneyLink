@@ -7,6 +7,18 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+<<<<<<< HEAD
+=======
+    "plugins": [
+      "expo-router",
+      "expo-web-browser"
+    ],
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+>>>>>>> 16cdb3e (Update login UI flow and router setup)
     "ios": {
       "supportsTablet": true
     },
