@@ -1,6 +1,65 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, StatusBar } from "react-native";
 
-export default StyleSheet.create({
+const styles =  StyleSheet.create({
+  
+  // NOTE!!!: Group 1 Places your styles here
+  background: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  overlay: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: "rgba(223, 51, 110, 0.34)",
+  },
+
+  content: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: 24,
+    paddingBottom: 72,
+    paddingTop: Platform.select({
+      ios: 48,
+      android: (StatusBar.currentHeight ?? 0) + 24,
+      default: 24,
+    }),
+  },
+  displayText: {
+    maxWidth: 240,
+    marginBottom: 28,
+    fontSize: 42,
+    fontWeight: "800",
+    lineHeight: 46,
+    color: "#FFFFFF",
+  },
+
+  primaryButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 52,
+    marginBottom: 14,
+    borderRadius: 999,
+    backgroundColor: "#ff2b78",
+  },
+
+  primaryButtonText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+
+  secondaryButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 52,
+    borderRadius: 999,
+    backgroundColor: "#FFFFFF",
+  },
+
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#3A3A3A",
+  },
 
   // NOTE!!!: Group 2 Places your styles here
   container: {
@@ -12,7 +71,6 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  
   // Header Section Styles - by DARE
   headerContainer: {
     flexDirection: 'column',
@@ -182,4 +240,131 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+
+  // NOTE!!!: Group 3 Places your styles here
+
+  container3: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  header:{
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    marginLeft: 20,
+  },
+
+  arrow:{
+    fontSize: 20,
+    marginRight: 140,
+  },
+
+  text: {
+    fontSize: 16,
+    paddingBottom: 70,
+    marginBottom: 60,
+    alignItems: "center",
+    alignSelf: "center",
+    marginRight: "auto",
+  },
+
+  title: {
+    fontSize: 35,
+    paddingRight: 70,
+    fontWeight: "bold",
+    marginTop: -100,
+  },
+
+  subtitle: {
+    fontSize: 16,
+    color: "gray",
+    paddingRight: 160,
+    marginBottom: 140,
+    paddingBottom: 90,
+
+  },
+
+  input3: {
+    width: "89%",
+    backgroundColor: "#f5f5f5",
+    borderRadius: 30,
+    padding: 17,
+    marginBottom: 27,
+    fontSize: 16,
+    borderWidth: 2,
+    borderColor: "#aaa",
+  },
+
+  inputContainer3: {
+    width: "100%",      
+    alignItems: "center", 
+    marginBottom: 20,    
+    marginTop: -190,     
+  },
+
+  cautionContainer: {
+    alignItems: "center",
+    marginTop: 15,
+    marginHorizontal: 30,
+  },
+
+  caution: {
+    fontSize: 15,
+    color: "gray",
+    textAlign: "center",
+  },
+
+  cautionDetails: {
+    fontSize: 15,
+    color: "gray",
+    textAlign: "center",
+    marginTop: 2, 
+  },
+
+  terms: {
+    color: "#ff2b78",
+    fontWeight: "bold",
+    marginRight: 5,
+  },
+
+  cautionText: {
+    color: "gray",
+    marginHorizontal: 5,
+
+  },
+
+  condition: {
+    color: "#ff2b78",
+    fontWeight: "bold",
+    marginLeft: 5,
+  },
+
+
+  button: {
+    width: "89%",
+    backgroundColor: "#ff2b78",
+    padding: 19,
+    borderRadius: 30,
+    alignItems: "center",
+  },
+
+  buttonText3: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  loginText: {
+    marginTop: 130,
+    color: "gray",
+  },
+
+  loginLink: {
+    color: "#ea147c",
+    fontWeight: "bold",
+  }
 })
+
+export default styles;
