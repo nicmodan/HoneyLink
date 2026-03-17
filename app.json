@@ -3,11 +3,18 @@
     "name": "x-clone",
     "slug": "x-clone",
     "version": "1.0.0",
+    "scheme": "honeylink",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "xclone",
-    "userInterfaceStyle": "automatic",
-    // "newArchEnabled": true,
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      "expo-router"
+    ],
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "supportsTablet": true
     },
