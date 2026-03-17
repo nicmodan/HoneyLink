@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, StatusBar } from "react-native";
+import { Platform, StatusBar, StyleSheet } from "react-native";
 
 const styles =  StyleSheet.create({
   
@@ -60,6 +60,10 @@ const styles =  StyleSheet.create({
     fontWeight: "700",
     color: "#3A3A3A",
   },
+  
+  // ------------------Group 1 styles End-------------------
+
+
 
   // NOTE!!!: Group 2 Places your styles here
   container: {
@@ -67,8 +71,8 @@ const styles =  StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "stretch",
     justifyContent: "flex-start",
-    paddingTop: Platform.OS === "android" ? 40 : 40,
-    paddingHorizontal: 20,
+    paddingTop: Platform.OS === "android" ? 40 : 50,
+    paddingHorizontal: 25,
   },
 
   // Header Section Styles - by DARE
@@ -89,7 +93,7 @@ const styles =  StyleSheet.create({
 
   backButton: {
     marginBottom: 8,
-    left: -10,
+    left: -4,
   },
 
   headerTitle: {
@@ -100,8 +104,8 @@ const styles =  StyleSheet.create({
   },
 
   welcomeText: {
-    fontSize: 28,
-    fontWeight: '600',
+    fontSize: 32,
+    fontWeight: 'bold',
     color: '#333',
     marginTop: 25,
   },
@@ -221,7 +225,7 @@ const styles =  StyleSheet.create({
   },
 
   termsText: {
-    marginTop: 24,
+    marginTop: 70,
     fontSize: 12,
     color: '#6B7280',
     textAlign: 'center',
@@ -241,129 +245,136 @@ const styles =  StyleSheet.create({
     fontWeight: '700',
   },
 
-  // NOTE!!!: Group 3 Places your styles here
+  // ------------------Group 2 styles End-------------------
 
-  container3: {
+
+  // NOTE!!!: Group 3 has been refactored for clarity and responsiveness.
+  // These styles are intended for the SignUp screen.
+  signUpContainer: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#fff',
+    paddingHorizontal: 24,
   },
 
-  header:{
-    flexDirection: "row",
-    alignSelf: "flex-start",
-    marginLeft: 20,
+  // Use SafeAreaView for top/bottom padding in your component
+  // e.g., <SafeAreaView style={styles.signUpContainer} edges={['top', 'bottom']}>
+
+  signUpHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 16, // Adjust as needed
+    marginBottom: 24,
   },
 
-  arrow:{
-    fontSize: 20,
-    marginRight: 140,
+  signUpBackArrow: {
+    padding: 8,
+    marginLeft: -8,
   },
 
-  text: {
+  signUpTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    marginBottom: 8,
+  },
+
+  signUpSubtitle: {
     fontSize: 16,
-    paddingBottom: 70,
-    marginBottom: 60,
-    alignItems: "center",
-    alignSelf: "center",
-    marginRight: "auto",
+    color: 'gray',
+    marginBottom: 32,
   },
 
-  title: {
-    fontSize: 35,
-    paddingRight: 70,
-    fontWeight: "bold",
-    marginTop: -100,
+  signUpForm: {
+    width: '100%',
+    gap: 20,
   },
 
-  subtitle: {
-    fontSize: 16,
-    color: "gray",
-    paddingRight: 160,
-    marginBottom: 140,
-    paddingBottom: 90,
-
+  signUpInput: {
+    height: 48,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    color: '#aaa'
   },
 
-  input3: {
-    width: "89%",
-    backgroundColor: "#f5f5f5",
-    borderRadius: 30,
-    padding: 17,
-    marginBottom: 27,
-    fontSize: 16,
-    borderWidth: 2,
-    borderColor: "#aaa",
+  signUpPasswordContainer: {
+    position: 'relative',
+    width: '100%',
+    justifyContent: 'center',
   },
 
-  inputContainer3: {
-    width: "100%",      
-    alignItems: "center", 
-    marginBottom: 20,    
-    marginTop: -190,     
+  signUpPasswordInput: {
+    paddingRight: 48,
   },
 
-  cautionContainer: {
-    alignItems: "center",
-    marginTop: 15,
-    marginHorizontal: 30,
+  signUpPasswordToggle: {
+    position: 'absolute',
+    right: 16,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
-  caution: {
-    fontSize: 15,
-    color: "gray",
-    textAlign: "center",
+  signUpButton: {
+    height: 48,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ff2b78',
+    marginTop: 24,
   },
 
-  cautionDetails: {
-    fontSize: 15,
-    color: "gray",
-    textAlign: "center",
-    marginTop: 2, 
-  },
-
-  terms: {
-    color: "#ff2b78",
-    fontWeight: "bold",
-    marginRight: 5,
-  },
-
-  cautionText: {
-    color: "gray",
-    marginHorizontal: 5,
-
-  },
-
-  condition: {
-    color: "#ff2b78",
-    fontWeight: "bold",
-    marginLeft: 5,
-  },
-
-
-  button: {
-    width: "89%",
-    backgroundColor: "#ff2b78",
-    padding: 19,
-    borderRadius: 30,
-    alignItems: "center",
-  },
-
-  buttonText3: {
-    color: "white",
-    fontWeight: "bold",
+  signUpButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
     fontSize: 16,
   },
 
-  loginText: {
-    marginTop: 130,
-    color: "gray",
+  signUpTermsContainer: {
+    marginTop: 24,
+    paddingHorizontal: 16,
   },
 
-  loginLink: {
-    color: "#ea147c",
-    fontWeight: "bold",
+  signUpTermsText: {
+    fontSize: 14,
+    color: 'gray',
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+
+  signUpTermsLink: {
+    color: '#ff2b78',
+    fontWeight: 'bold',
+  },
+
+  // Place the footer outside the ScrollView for it to stick to the bottom
+  signUpFooter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20, // Space from bottom and content
+  },
+
+  signUpFooterText: {
+    color: 'gray',
+    fontSize: 14,
+  },
+
+  signUpFooterLink: {
+    color: '#ea147c',
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginLeft: 4,
+  },
+
+  headerTitle2: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#111',
+    marginLeft: 85,
   }
 })
 

@@ -4,11 +4,17 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
-    "module": "ESNext",  
+    "module": "ESNext",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
 }

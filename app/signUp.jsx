@@ -9,18 +9,14 @@ import {
   Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Entypo from '@expo/vector-icons/Entypo';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import styles from '../../style';
-import Feather from '@expo/vector-icons/Feather';
+import styles from '../style';
 
 const SignUpScreen = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
-
 
   // A placeholder function for the sign-up logic
   const handleSignUp = () => {
@@ -38,23 +34,15 @@ const SignUpScreen = () => {
         {/* Header is part of the main view, not scrollable */}
         <View style={styles.signUpHeader}>
           <TouchableOpacity onPress={() => router.back()} style={styles.signUpBackArrow}>
-            <Entypo name="chevron-left" size={30} color="black" />
+            <Ionicons name="arrow-back" size={24} color="black" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle2}>Sign Up</Text>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <Text style={styles.signUpTitle}>Create an account</Text>
-          <Text style={styles.signUpSubtitle}>Create an account to continue</Text>
+          <Text style={styles.signUpSubtitle}>Let's get you started on HoneyLink.</Text>
 
           <View style={styles.signUpForm}>
-
-            <TextInput
-              placeholder="User Name"
-              style={styles.signUpInput}
-              autoCapitalize="none"              
-            />
-
             <TextInput
               placeholder="Email"
               style={styles.signUpInput}
@@ -63,44 +51,15 @@ const SignUpScreen = () => {
               value={email}
               onChangeText={setEmail}
             />
-            <View style={styles.signUpPasswordContainer}>
-              <TextInput
-                placeholder="Password"
-                style={[styles.signUpInput, styles.signUpPasswordInput]}
-                secureTextEntry={!passwordVisible}
-                value={password}
-                onChangeText={setPassword}
-              />
-              <TouchableOpacity
-                style={styles.signUpPasswordToggle}
-                onPress={() => setPasswordVisible(!passwordVisible)}>
-                {passwordVisible ? (
-                  <Feather name="eye" size={24} color="#666" />
-                ) : (
-                  <Feather name="eye-off" size={24} color="#666" />
-                )}
-              </TouchableOpacity>
-            </View>
-            <View style={styles.signUpPasswordContainer}>
-              <TextInput
-                placeholder="Confirm Password"
-                style={[styles.signUpInput, styles.signUpPasswordInput]}
-                secureTextEntry={!passwordVisible}
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-              />
-              <TouchableOpacity
-                style={styles.signUpPasswordToggle}
-                onPress={() => setPasswordVisible(!passwordVisible)}>
-                {passwordVisible ? (
-                  <Feather name="eye" size={24} color="#666" />
-                ) : (
-                  <Feather name="eye-off" size={24} color="#666" />
-                )}
-              </TouchableOpacity>
-            </View>
+            <TextInput
+              placeholder="Password"
+              style={styles.signUpInput}
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
           </View>
-          
+
           <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
             <Text style={styles.signUpButtonText}>Sign Up</Text>
           </TouchableOpacity>
@@ -117,7 +76,7 @@ const SignUpScreen = () => {
         {/* Footer sticks to the bottom */}
         <View style={styles.signUpFooter}>
           <Text style={styles.signUpFooterText}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => router.replace('/LoginUI')}>
+          <TouchableOpacity onPress={() => router.replace('/login')}>
             <Text style={styles.signUpFooterLink}>Login</Text>
           </TouchableOpacity>
         </View>

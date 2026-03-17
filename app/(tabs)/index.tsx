@@ -19,14 +19,14 @@ export default function HomeScreen() {
 
         <Pressable
           style={styles.primaryButton}
-          onPress={() => router.push("/(auth)/LoginUI")}
+          onPress={() => router.push("./LoginUI")}
         >
           <Text style={styles.primaryButtonText}>Login</Text>
         </Pressable>
 
         <Pressable
           style={styles.secondaryButton}
-          onPress={() => router.push("/(auth)/siging")}
+          onPress={() => router.push("./signUp")}
         >
           <Text style={styles.secondaryButtonText}>Signup</Text>
         </Pressable>

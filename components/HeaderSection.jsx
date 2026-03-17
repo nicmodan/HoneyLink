@@ -9,7 +9,7 @@ const HeaderSection = () => {
     <View style={styles.headerContainer}>
       <View style={styles.headerContainer2}>        
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Entypo name="chevron-left" size={35} color="black" />
+          <Entypo name="chevron-left" size={30} color="black" />
         </TouchableOpacity>     
         <Text style={styles.headerTitle}>Login</Text> 
       </View>
