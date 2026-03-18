@@ -1,12 +1,16 @@
 import { router } from "expo-router";
+import React, { useState } from "react";
+
 import {
   ImageBackground,
   Pressable,
   Text,
   View,
 } from "react-native";
+import Footer from "./navigation";
 import styles from '../../style'
 export default function HomeScreen() {
+  const [activeTab, setActiveTab] = useState("home");
   return (
     <ImageBackground
       source={require("../../assets/images/Couples.jpg")}
@@ -31,6 +35,8 @@ export default function HomeScreen() {
           <Text style={styles.secondaryButtonText}>Signup</Text>
         </Pressable>
       </View>
+
     </ImageBackground>
+    
   );
 }
