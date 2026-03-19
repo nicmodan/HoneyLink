@@ -1,21 +1,48 @@
 import React from "react";
 import {
+  Platform,
   View,
   TouchableOpacity,
 } from "react-native";
+import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "@react-native-vector-icons/ionicons";
 import styles from "@/style";
 
 type Props = {
   activeTab: string;
-  onTabPress: (tab: string) => void;
+  onTabPress?: (tab: string) => void;
 };
 
 const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const bottomInset = Platform.OS === "ios" ? Math.max(insets.bottom, 10) : 15;
+
+  const handleTabPress = (tab: string) => {
+    onTabPress?.(tab);
+
+    if (tab === "home") {
+      router.push("/");
+    }
+
+    if (tab === "profile") {
+      router.push("/profile");
+    }
+  };
+
   return (
-    <View style={styles.navigationContainer}>
+    <View
+      style={[
+        styles.navigationContainer,
+        {
+          paddingBottom: bottomInset,
+          height: 62 + bottomInset,
+        },
+      ]}
+    >
       {/* Home */}
-      <TouchableOpacity onPress={() => onTabPress("home")}>
+      <TouchableOpacity onPress={() => handleTabPress("home")}>
         <Icon
           name="home-outline"
           size={24}
@@ -24,7 +51,7 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
       </TouchableOpacity>
 
       {/* Favorites */}
-      <TouchableOpacity onPress={() => onTabPress("favorites")}>
+      <TouchableOpacity onPress={() => handleTabPress("favorites")}>
         <Icon
           name="heart-outline"
           size={24}
@@ -34,14 +61,19 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
 
       {/* Floating Add Button */}
       <TouchableOpacity
-        style={styles.fab}
-        onPress={() => onTabPress("add")}
+        style={[
+          styles.fab,
+          {
+            bottom: Platform.OS === "ios" ? bottomInset + 4 : 45,
+          },
+        ]}
+        onPress={() => handleTabPress("add")}
       >
         <Icon name="add" size={28} color="#fff" />
       </TouchableOpacity>
 
       {/* Messages */}
-      <TouchableOpacity onPress={() => onTabPress("messages")}>
+      <TouchableOpacity onPress={() => handleTabPress("messages")}>
         <Icon
           name="chatbubble-outline"
           size={24}
@@ -50,7 +82,7 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
       </TouchableOpacity>
 
       {/* Profile */}
-      <TouchableOpacity onPress={() => onTabPress("profile")}>
+      <TouchableOpacity onPress={() => handleTabPress("profile")}>
         <Icon
           name="person-outline"
           size={24}

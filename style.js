@@ -381,18 +381,19 @@ const styles =  StyleSheet.create({
     position: "absolute",
     bottom: 0,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    height: 70,
+    height: 66,
     backgroundColor: "#fff",
     borderTopWidth: 0.5,
     borderColor: "#ddd",
-    paddingBottom: Platform.OS === "ios" ? 20 : 10,
+    paddingHorizontal: 40,
   },
   fab: {
     position: "absolute",
-    bottom: 25,
+    left: "63%",
+    marginLeft: -30,
     backgroundColor: "#FF4D6D",
     width: 60,
     height: 60,
@@ -400,6 +401,273 @@ const styles =  StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,
+    zIndex: 2,
+  },
+
+  profileScreen: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+
+  profileHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingTop: Platform.OS === "android" ? 14 : 6,
+    paddingBottom: 12,
+  },
+
+  profileHeaderButton: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profileHeaderTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#111827",
+  },
+
+  profileEditButton: {
+    minWidth: 36,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+
+  profileEditText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#111827",
+  },
+
+  profileContent: {
+    paddingHorizontal: 24,
+    paddingTop: 8,
+    paddingBottom: 130,
+  },
+
+  profileAvatarSection: {
+    alignItems: "center",
+    marginBottom: 26,
+  },
+
+  profileAvatar: {
+    width: 92,
+    height: 92,
+    borderRadius: 46,
+    marginBottom: 14,
+  },
+
+  profileName: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 6,
+  },
+
+  profileLocation: {
+    fontSize: 14,
+    color: "#9CA3AF",
+  },
+
+  profileStatsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 30,
+    paddingHorizontal: 10,
+  },
+
+  profileStatBlock: {
+    alignItems: "center",
+    flex: 1,
+  },
+
+  profileStatValue: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#FF4D6D",
+    marginBottom: 4,
+  },
+
+  profileStatLabel: {
+    fontSize: 13,
+    color: "#6B7280",
+  },
+
+  profileTabsRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 32,
+    marginBottom: 22,
+  },
+
+  profileTabButton: {
+    alignItems: "center",
+    minWidth: 70,
+  },
+
+  profileTabText: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: "#9CA3AF",
+  },
+
+  profileTabTextActive: {
+    color: "#111827",
+    fontWeight: "700",
+  },
+
+  profileTabUnderline: {
+    marginTop: 8,
+    width: 34,
+    height: 3,
+    borderRadius: 999,
+    backgroundColor: "#FF4D6D",
+  },
+
+  profileAboutCard: {
+    backgroundColor: "#FFF5F8",
+    borderRadius: 22,
+    padding: 20,
+  },
+
+  profileAboutTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 10,
+  },
+
+  profileAboutText: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: "#4B5563",
+  },
+
+  profileGalleryGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: 12,
+  },
+
+  profileGalleryImage: {
+    width: "31%",
+    aspectRatio: 1,
+    borderRadius: 16,
+  },
+
+  profileDetailsScreen: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+
+  profileDetailsHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 24,
+    paddingTop: Platform.OS === "android" ? (StatusBar.currentHeight ?? 0) + 6 : 10,
+    paddingBottom: 10,
+  },
+
+  profileDetailsHeaderButton: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profileDetailsHeaderTitle: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#111827",
+  },
+
+  profileDetailsSaveButton: {
+    minWidth: 40,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+
+  profileDetailsSaveText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#FF4D6D",
+  },
+
+  profileDetailsContent: {
+    paddingHorizontal: 24,
+    paddingTop: 20,
+    paddingBottom: 90,
+  },
+
+  profileDetailsAvatarWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 24,
+  },
+
+  profileDetailsAvatarFrame: {
+    position: "relative",
+    width: 96,
+    height: 96,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profileDetailsAvatar: {
+    width: 94,
+    height: 94,
+    borderRadius: 47,
+  },
+
+  profileDetailsCameraButton: {
+    position: "absolute",
+    right: -4,
+    bottom: 8,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: "#FF4D6D",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 3,
+    borderColor: "#FFFFFF",
+  },
+
+  profileDetailsFields: {
+    gap: 0,
+  },
+
+  profileDetailsFieldCard: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E7EB",
+    paddingTop: 12,
+    paddingBottom: 20,
+  },
+
+  profileDetailsFieldLabel: {
+    fontSize: 13,
+    color: "#9CA3AF",
+    marginBottom: 10,
+  },
+
+  profileDetailsFieldValue: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#111827",
+  },
+
+  profileDetailsFieldInput: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#111827",
+    paddingVertical: 0,
+    minHeight: 24,
   }
 })
 
