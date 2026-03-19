@@ -375,6 +375,31 @@ const styles =  StyleSheet.create({
     fontWeight: '600',
     color: '#111',
     marginLeft: 85,
+  },
+
+  navigationContainer:{
+    position: "absolute",
+    bottom: 0,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "100%",
+    height: 70,
+    backgroundColor: "#fff",
+    borderTopWidth: 0.5,
+    borderColor: "#ddd",
+    paddingBottom: Platform.OS === "ios" ? 20 : 10,
+  },
+  fab: {
+    position: "absolute",
+    bottom: 25,
+    backgroundColor: "#FF4D6D",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
   }
 })
 
