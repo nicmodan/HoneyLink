@@ -16,11 +16,11 @@ import styles from "@/style";
 
 export default function ProfileScreen() {
   const [profileForm, setProfileForm] = useState({
-    userName: "Jaylon Doe",
-    email: "JaylonDoe@gmail.com",
-    phone: "+880 114 225 222",
-    location: "New York, San Francisco",
-    dateOfBirth: "20-08-1999",
+    userName: "Divine",
+    email: "divine@gmail.com",
+    phone: "",
+    location: "my house",
+    dateOfBirth: "20-8-1934",
   });
 
   const profileFields = [
