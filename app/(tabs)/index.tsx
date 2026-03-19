@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
-import Footer from "./navigation";
+import Footer from "./Navigation";
 import styles from '../../style'
 export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState("home");
