@@ -377,29 +377,41 @@ const styles =  StyleSheet.create({
     marginLeft: 85,
   },
 
-  navigationContainer:{
+  navigationWrapper: {
     position: "absolute",
     bottom: 0,
+    width: "100%",
+    alignItems: "center",
+  },
+  navigationContainer:{
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     width: "100%",
     height: 70,
     backgroundColor: "#fff",
-    borderTopWidth: 0.5,
+    borderTopWidth: 0.9,
     borderColor: "#ddd",
     paddingBottom: Platform.OS === "ios" ? 20 : 10,
   },
   fab: {
     position: "absolute",
-    bottom: 25,
-    backgroundColor: "#FF4D6D",
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    bottom: 55,
+    backgroundColor: "#ff2b78",
+    width: 50,
+    height: 50,
+    borderRadius: 32.5,
     justifyContent: "center",
     alignItems: "center",
-    elevation: 5,
+
+    // Shadow (iOS)
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.7,
+    shadowRadius: 6,
+
+    // Shadow (Android)
+    elevation: 8
   }
 })
 
