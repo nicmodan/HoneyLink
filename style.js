@@ -383,6 +383,10 @@ const styles =  StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
+  
+  // ------------------Group 3 styles End-------------------
+
+  // NOTE!!!: Group 4 Places your styles here
   navigationContainer:{
     flexDirection: "row",
     justifyContent: "space-around",

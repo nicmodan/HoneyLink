@@ -33,6 +33,13 @@ export default function HomeScreen() {
         >
           <Text style={styles.secondaryButtonText}>Signup</Text>
         </Pressable>
+
+        <Pressable
+          onPress={() => router.push("./ProfileUI")}
+        >
+          <Text style={styles.linkText}>Continue as Guest</Text>
+        </Pressable>
+
       </View>
     </ImageBackground>
     
