@@ -508,62 +508,46 @@ const styles =  StyleSheet.create({
     marginLeft: 85,
   },
 
+  navigationWrapper: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    alignItems: "center",
+  },
+  
   // ------------------Group 3 styles End-------------------
 
   // NOTE!!!: Group 4 Places your styles here
-  navigationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 16,
-    left: 16,
-    right: 16,
-    height: 64,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#fff',
-    borderRadius: 32,
-    paddingHorizontal: 24,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
-    ...Platform.select({
-      ios: {
-        paddingBottom: 0,
-      },
-      android: {  
-        paddingBottom: 0,
-      }
-    })
+  navigationContainer:{
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "100%",
+    height: 70,
+    backgroundColor: "#fff",
+    borderTopWidth: 0.9,
+    borderColor: "#ddd",
+    paddingBottom: Platform.OS === "ios" ? 20 : 10,
   },
-
   fab: {
-    position: 'relative',
-    bottom: 16,
-    width: 60,
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-    backgroundColor: '#ff4d6d', 
-    shadowColor: '#000',
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },   
-    elevation: 5,
-  },
+    position: "absolute",
+    bottom: 55,
+    backgroundColor: "#ff2b78",
+    width: 50,
+    height: 50,
+    borderRadius: 32.5,
+    justifyContent: "center",
+    alignItems: "center",
 
-  linkText: {
-    marginTop: 20,
-    color: '#ff2b78',
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  // ------------------Group 4 styles End-------------------
+    // Shadow (iOS)
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.7,
+    shadowRadius: 6,
+
+    // Shadow (Android)
+    elevation: 8
+  }
 })
 
 export default styles;

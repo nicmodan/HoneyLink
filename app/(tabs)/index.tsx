@@ -1,4 +1,6 @@
 import { router } from "expo-router";
+import React, { useState } from "react";
+
 import {
   ImageBackground,
   Pressable,
@@ -6,6 +8,7 @@ import {
   View,
 } from "react-native";
 import styles from '../../style'
+
 export default function HomeScreen() {
   return (
     <ImageBackground
@@ -39,5 +42,6 @@ export default function HomeScreen() {
 
       </View>
     </ImageBackground>
+    
   );
 }
