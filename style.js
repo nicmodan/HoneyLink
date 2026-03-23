@@ -1,5 +1,6 @@
-import { Platform, StatusBar, StyleSheet } from "react-native";
+import { Platform, StatusBar, StyleSheet, } from "react-native";
 
+import { INNER_WIDTH, OUTER_PADDING, GRID_SPACING, TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT } from "./constants/layout"
 const styles =  StyleSheet.create({
   
   // NOTE!!!: Group 1 Places your styles here
@@ -115,6 +116,55 @@ const styles =  StyleSheet.create({
     color: '#666',
     marginTop: 13,
   },
+
+  // Header Profile Content Styles - by DARE
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+
+  profileTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    left: 10,
+  },
+
+  editButton: {
+    fontSize: 16,
+    color: '#888',
+    left: 10,
+  },
+
+  profileContainer: {
+    backgroundColor: '#fff',
+    paddingTop: 10,
+    paddingBottom: 20,
+    alignItems: 'center'
+  },
+
+  profileName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+  },
+
+  profileLocation: { 
+    fontSize: 14,
+    color: '#666',
+    marginTop: 5,
+  },
+
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
   
   // Email Password Login Section Styles - Micah
   formContainer: {
@@ -158,7 +208,19 @@ const styles =  StyleSheet.create({
     fontWeight: '600',
   },
 
+  backButton2: {
+    marginLeft: -20
+  },
+
   // Social Login Section Styles - by Ifunanya
+
+  containerGallery: {
+    flex: 0.5,
+    backgroundColor: '#fff',
+    justifyContent: 'center',      // center card vertically
+    alignItems: 'center',
+  },
+
   socialLoginContainer: {
     width: '100%',
     paddingVertical: 16,
@@ -244,6 +306,75 @@ const styles =  StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+
+  // Profile Gallery styles - by Ifunanya
+  inner: {
+    width: INNER_WIDTH,
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    borderRadius: 18,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOpacity: 0.10,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 5,
+  },
+
+  // ── Grid ──────────────────────────────────────────────
+  grid: {
+    // Match TILE_SIZE math: outer padding (2*4) + tile margins (6*4) = GRID_SPACING*(COLUMNS+1)
+    paddingHorizontal: GRID_SPACING / 2,
+    paddingTop: 14,
+    paddingBottom: 14,
+  },
+
+  tile: {
+    width: TILE_SIZE,
+    height: TILE_SIZE * 1.05,
+    borderRadius: 14,
+    overflow: 'hidden',
+    margin: GRID_SPACING / 2,
+  },
+
+  tileImage: {
+    width: '100%',
+    height: '100%',
+  },
+
+  // ── Full-screen viewer ────────────────────────────────
+  viewerContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  viewerSlide: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewerImage: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  },
+  closeBtn: {
+    position: 'absolute',
+    top: 48,
+    right: 20,
+    zIndex: 10,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+
 
   // ------------------Group 2 styles End-------------------
 

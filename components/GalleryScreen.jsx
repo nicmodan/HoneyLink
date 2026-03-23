@@ -1,33 +1,17 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import {
   View,
   Image,
   FlatList,
   TouchableOpacity,
   Modal,
-  StyleSheet,
-  Dimensions,
   StatusBar,
   Text,
   SafeAreaView,
 } from 'react-native';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const OUTER_PADDING = 20;          // card margin from screen edge
-const GRID_SPACING = 8;
-const COLUMNS = 3;
-const INNER_WIDTH = SCREEN_WIDTH - OUTER_PADDING * 2;
-const TILE_SIZE = (INNER_WIDTH - GRID_SPACING * (COLUMNS + 1)) / COLUMNS;
-
-// Using the same image 6 times — swap in other images whenever you have them
-const IMAGES = [
-  { id: '1', source: require('../assets/light bulb.jpg') },
-  { id: '2', source: require('../assets/light bulb.jpg') },
-  { id: '3', source: require('../assets/light bulb.jpg') },
-  { id: '4', source: require('../assets/light bulb.jpg') },
-  { id: '5', source: require('../assets/light bulb.jpg') },
-  { id: '6', source: require('../assets/light bulb.jpg') },
-];
+import { SCREEN_WIDTH, COLUMNS, IMAGES } from "../constants/layout"
+import styles from '../style';
 
 export default function GalleryScreen() {
   const [visible, setVisible] = useState(false);
@@ -58,7 +42,7 @@ export default function GalleryScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.containerGallery}>
       <View style={styles.inner}>
         <FlatList
           data={IMAGES}
@@ -101,74 +85,3 @@ export default function GalleryScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-    justifyContent: 'center',      // center card vertically
-    alignItems: 'center',
-  },
-  inner: {
-    width: INNER_WIDTH,
-    backgroundColor: '#fff',
-    marginHorizontal: OUTER_PADDING,
-    borderRadius: 18,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOpacity: 0.10,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 5,
-  },
-
-  // ── Grid ──────────────────────────────────────────────
-  grid: {
-    paddingHorizontal: GRID_SPACING / 2,  // matches tile outer margin — no overflow
-    paddingTop: 14,
-    paddingBottom: 14,
-  },
-  tile: {
-    width: TILE_SIZE,
-    height: TILE_SIZE * 1.05,
-    borderRadius: 14,
-    overflow: 'hidden',
-    margin: GRID_SPACING / 2,
-  },
-  tileImage: {
-    width: '100%',
-    height: '100%',
-  },
-
-  // ── Full-screen viewer ────────────────────────────────
-  viewerContainer: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
-  viewerSlide: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewerImage: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-  },
-  closeBtn: {
-    position: 'absolute',
-    top: 48,
-    right: 20,
-    zIndex: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  closeText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
-  },
-});
