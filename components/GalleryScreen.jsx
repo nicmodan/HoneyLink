@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   Modal,
-  StyleSheet,
   StatusBar,
   Text,
   SafeAreaView,
