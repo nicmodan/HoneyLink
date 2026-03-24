@@ -30,6 +30,38 @@ const ProfileHeader = () => {
       {/* Location */}
       <Text style={styles.profileLocation}>San Francisco, USA</Text>
 
+      <View style={styles.statsRow}>
+        <View style={styles.stat}>
+          <Text style={styles.statNumber}>
+            120
+          </Text>
+
+          <Text style={styles.statLabel}>
+            Followers
+          </Text>
+        </View>
+
+        <View style={styles.stat}>
+          <Text style={styles.statNumber}>
+            300
+          </Text>
+
+          <Text style={styles.statLabel}>
+            Following
+          </Text>
+        </View>
+
+        <View style={styles.stat}>
+          <Text style={styles.statNumber}>
+            50
+          </Text>
+
+          <Text style={styles.statLabel}>
+            Favourites
+          </Text>
+        </View>
+      </View>
+
     </View>
   );
 };

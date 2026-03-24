@@ -9,7 +9,9 @@ const ProfileUI = () => {
   return (
     <View style={styles.container}>
       <ProfileHeader />
-      <GalleryScreen />
+      <View style={styles.profileContent}>
+        <GalleryScreen />
+      </View>
       <Navigation activeTab={activeTab} onTabPress={setActiveTab} />
     </View>
   )

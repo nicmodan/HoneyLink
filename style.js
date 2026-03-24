@@ -147,6 +147,11 @@ const styles =  StyleSheet.create({
     alignItems: 'center'
   },
 
+  profileContent: {
+    flex: 1,
+    minHeight: 0,
+  },
+
   profileName: {
     fontSize: 18,
     fontWeight: '600',
@@ -212,12 +217,34 @@ const styles =  StyleSheet.create({
     marginLeft: -20
   },
 
+  // Profile Stat styles - by Micah
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    gap: 40,
+  },
+
+  stat: {
+    alignItems: 'center'
+  },
+
+  statNumber: {
+    color: '#ff4d6d',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+
+  statLabel: {
+    color: '#666',
+  },
+
   // Social Login Section Styles - by Ifunanya
 
   containerGallery: {
-    flex: 0.5,
+    flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',      // center card vertically
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
@@ -308,7 +335,56 @@ const styles =  StyleSheet.create({
   },
 
   // Profile Gallery styles - by Ifunanya
+  tabView: {
+    flex: 1,
+  },
+
+  tabBar: {
+    backgroundColor: '#fff',
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    paddingHorizontal: 0,
+  },
+
+  tabIndicator: {
+    backgroundColor: '#ff2b78',
+    height: 3,
+    borderRadius: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+    width: 65,
+    marginLeft: 48,
+  },
+
+  tabLabel: {
+    fontSize: 16,
+    textTransform: 'none',
+    fontWeight: '600',
+  },
+
+  tabItem: {
+    width: 'auto',
+    paddingHorizontal: 6,
+  },
+
+  about: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+
+  aboutText: {
+    fontSize: 15,
+    color: '#666',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+
   inner: {
+    flex: 1,
     width: INNER_WIDTH,
     backgroundColor: '#fff',
     alignSelf: 'center',
@@ -327,6 +403,14 @@ const styles =  StyleSheet.create({
     paddingHorizontal: GRID_SPACING / 2,
     paddingTop: 14,
     paddingBottom: 14,
+  },
+
+  gridFill: {
+    flexGrow: 1,
+  },
+
+  galleryList: {
+    flex: 1,
   },
 
   tile: {

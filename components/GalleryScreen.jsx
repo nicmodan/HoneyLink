@@ -8,7 +8,9 @@ import {
   StatusBar,
   Text,
   SafeAreaView,
+  useWindowDimensions,
 } from 'react-native';
+import { TabView, TabBar } from 'react-native-tab-view';
 
 import { SCREEN_WIDTH, COLUMNS, IMAGES } from "../constants/layout"
 import styles from '../style';
@@ -17,6 +19,12 @@ export default function GalleryScreen() {
   const [visible, setVisible] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
   const viewerRef = useRef(null);
+  const layout = useWindowDimensions();
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'about', title: 'About' },
+    { key: 'gallery', title: 'Gallery' },
+  ]);
 
   const openViewer = (index) => {
     setStartIndex(index);
@@ -41,7 +49,16 @@ export default function GalleryScreen() {
     </View>
   );
 
-  return (
+  // About tab
+  const AboutRoute = () => (
+    <View style={styles.about}>
+      <Text style={styles.aboutText}>
+        Passionate traveler | Photographer | Designer | Developer
+      </Text>
+    </View>
+  );
+
+  const GalleryRoute = () => (
     <SafeAreaView style={styles.containerGallery}>
       <View style={styles.inner}>
         <FlatList
@@ -49,9 +66,9 @@ export default function GalleryScreen() {
           keyExtractor={(item) => item.id}
           numColumns={COLUMNS}
           renderItem={renderGridItem}
-          contentContainerStyle={styles.grid}
+          style={styles.galleryList}
+          contentContainerStyle={[styles.grid, styles.gridFill]}
           showsVerticalScrollIndicator={false}
-          scrollEnabled={false}
         />
       </View>
 
@@ -82,6 +99,37 @@ export default function GalleryScreen() {
         </View>
       </Modal>
     </SafeAreaView>
+  );
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'about':
+        return <AboutRoute />;
+      case 'gallery':
+        return <GalleryRoute />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <TabView
+      style={styles.tabView}
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+      renderTabBar={(props) => (
+        <TabBar
+          {...props}
+          style={styles.tabBar}
+          indicatorStyle={styles.tabIndicator}
+          labelStyle={styles.tabLabel}
+          activeColor="#333"
+          inactiveColor="#999"
+        />
+      )}
+    />
   );
 }
 
