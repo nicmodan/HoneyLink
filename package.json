@@ -37,7 +37,8 @@
     "react-native-tab-view": "^4.3.0",
     "react-native-vector-icons": "^10.3.0",
     "react-native-web": "^0.21.0",
-    "react-native-worklets": "0.7.2"
+    "react-native-worklets": "0.7.2",
+    "undefined": "apollo/client"
   },
   "devDependencies": {
     "@types/react": "~19.2.10",

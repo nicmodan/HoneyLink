@@ -1,6 +1,6 @@
 import { Platform, StatusBar, StyleSheet, } from "react-native";
 
-import { INNER_WIDTH, OUTER_PADDING, GRID_SPACING, TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT } from "./constants/layout"
+import { INNER_WIDTH, GRID_SPACING, TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT } from "./constants/layout"
 const styles =  StyleSheet.create({
   
   // NOTE!!!: Group 1 Places your styles here
@@ -24,6 +24,7 @@ const styles =  StyleSheet.create({
       default: 24,
     }),
   },
+  
   displayText: {
     maxWidth: 240,
     marginBottom: 28,
