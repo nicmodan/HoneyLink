@@ -346,6 +346,7 @@ const styles =  StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
     paddingHorizontal: 0,
+
   },
 
   tabIndicator: {
