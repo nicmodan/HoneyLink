@@ -4,6 +4,7 @@ import styles from '../style';
 import Feather from '@expo/vector-icons/Feather';
 
 const EmailPassword = () => {
+  
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
