@@ -522,7 +522,8 @@ const styles =  StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "100%",
+    left: 0,
+    right: 0,
     height: 66,
     backgroundColor: "#fff",
     borderTopWidth: 0.9,
@@ -825,7 +826,216 @@ const styles =  StyleSheet.create({
     color: "#111827",
     paddingVertical: 0,
     minHeight: 24,
+<<<<<<< HEAD
 >>>>>>> df61004 (Add editable profile details screen)
+=======
+  },
+
+  defaultProfileScreen: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: Platform.OS === "android" ? 40 : 50,
+  },
+
+  defaultProfileHeaderContainer: {
+    backgroundColor: "#fff",
+    paddingTop: 10,
+    paddingBottom: 20,
+    alignItems: "center",
+  },
+
+  defaultProfileHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+
+  defaultProfileBackButton: {
+    marginLeft: -20,
+  },
+
+  defaultProfileTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333",
+    left: 10,
+  },
+
+  defaultProfileEditButton: {
+    fontSize: 16,
+    color: "#888",
+    left: 10,
+  },
+
+  defaultProfileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+
+  defaultProfileName: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333",
+  },
+
+  defaultProfileLocation: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 5,
+  },
+
+  defaultProfileStatsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+    gap: 40,
+  },
+
+  defaultProfileStat: {
+    alignItems: "center",
+  },
+
+  defaultProfileStatNumber: {
+    color: "#ff4d6d",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+
+  defaultProfileStatLabel: {
+    color: "#666",
+  },
+
+  defaultProfileContent: {
+    flex: 1,
+    minHeight: 0,
+  },
+
+  defaultProfileTabRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 28,
+    paddingTop: 8,
+    paddingBottom: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+
+  defaultProfileTabButton: {
+    alignItems: "center",
+    minWidth: 72,
+  },
+
+  defaultProfileTabText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#999",
+  },
+
+  defaultProfileTabTextActive: {
+    color: "#333",
+  },
+
+  defaultProfileTabIndicator: {
+    marginTop: 8,
+    height: 3,
+    width: 65,
+    borderRadius: 20,
+    backgroundColor: "#ff2b78",
+  },
+
+  defaultProfileAbout: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 24,
+  },
+
+  defaultProfileAboutText: {
+    fontSize: 15,
+    color: "#666",
+    textAlign: "center",
+    lineHeight: 22,
+  },
+
+  defaultProfileGalleryWrapper: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+
+  defaultProfileInner: {
+    flex: 1,
+    width: "100%",
+    backgroundColor: "#fff",
+    alignSelf: "center",
+    borderRadius: 18,
+    overflow: "hidden",
+  },
+
+  defaultProfileGalleryList: {
+    flex: 1,
+  },
+
+  defaultProfileGrid: {
+    paddingHorizontal: 5,
+    paddingTop: 14,
+    paddingBottom: 120,
+  },
+
+  defaultProfileTile: {
+    width: "30.5%",
+    aspectRatio: 0.95,
+    borderRadius: 14,
+    overflow: "hidden",
+    margin: 5,
+  },
+
+  defaultProfileTileImage: {
+    width: "100%",
+    height: "100%",
+  },
+
+  defaultProfileViewerContainer: {
+    flex: 1,
+    backgroundColor: "#000",
+  },
+
+  defaultProfileViewerSlide: {
+    width: 360,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  defaultProfileViewerImage: {
+    width: 360,
+    height: "100%",
+  },
+
+  defaultProfileCloseBtn: {
+    position: "absolute",
+    top: 48,
+    right: 20,
+    zIndex: 10,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  defaultProfileCloseText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "700",
+>>>>>>> ba41656 (gql server)
   }
 })
 

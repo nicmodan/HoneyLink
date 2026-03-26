@@ -38,7 +38,7 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
         styles.navigationContainer,
         {
           paddingBottom: bottomInset,
-          height: 62 + bottomInset,
+          height: 72 + bottomInset,
         },
       ]}
     >
@@ -65,7 +65,7 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
         style={[
           styles.fab,
           {
-            bottom: Platform.OS === "ios" ? bottomInset + 4 : 45,
+            bottom: Platform.OS === "ios" ? bottomInset + 4 : 57,
           },
         ]}
         onPress={() => handleTabPress("add")}
