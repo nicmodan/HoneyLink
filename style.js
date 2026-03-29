@@ -197,7 +197,7 @@ const styles =  StyleSheet.create({
 
   input: {
     fontSize: 16,
-    color: '#1F2937',
+    color: '#2e2e2e',
     flex: 1,
   },
 
@@ -648,6 +648,78 @@ const styles =  StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
+  },
+
+  authButtonDisabled: {
+    opacity: 0.7,
+  },
+
+  popupOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(17, 24, 39, 0.45)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+
+  popupCard: {
+    width: '100%',
+    maxWidth: 340,
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    paddingHorizontal: 24,
+    paddingVertical: 28,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.14,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 10,
+  },
+
+  popupTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+
+  popupTitleSuccess: {
+    color: '#0F9D58',
+  },
+
+  popupTitleError: {
+    color: '#D93025',
+  },
+
+  popupMessage: {
+    fontSize: 15,
+    color: '#4B5563',
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 24,
+  },
+
+  popupButton: {
+    minWidth: 140,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 999,
+    alignItems: 'center',
+  },
+
+  popupButtonSuccess: {
+    backgroundColor: '#0F9D58',
+  },
+
+  popupButtonError: {
+    backgroundColor: '#D93025',
+  },
+
+  popupButtonText: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '700',
   },
   // ------------------Group 4 styles End-------------------
 })

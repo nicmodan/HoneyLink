@@ -25,7 +25,7 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
       </TouchableOpacity>
 
       {/* Favorites */}
-      <TouchableOpacity onPress={() => {onTabPress?.("favorites"); router.push("/(tabs)/LoginUI")}}>
+      <TouchableOpacity onPress={() => {onTabPress?.("favorites")}}>
         <Octicons
           name="heart"
           size={24}

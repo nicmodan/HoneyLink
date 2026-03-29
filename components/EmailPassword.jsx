@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import styles from '../style';
 import Feather from '@expo/vector-icons/Feather';
 
-const EmailPassword = () => {
+const EmailPassword = ({ email, setEmail, password, setPassword }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
@@ -11,9 +11,11 @@ const EmailPassword = () => {
       {/* User Name Input */}
       <View style={styles.inputContainer}>
         <TextInput 
-          placeholder="User Name" 
+          placeholder="Email or Username" 
           placeholderTextColor="#666"
           style={styles.input} 
+          value={email}
+          onChangeText={setEmail}
         />
       </View>
 
@@ -24,8 +26,10 @@ const EmailPassword = () => {
           placeholderTextColor="#666"
           secureTextEntry={!passwordVisible}
           style={[styles.input, { flex: 1 }]} 
+          value={password}
+          onChangeText={setPassword}
         />
-        <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+        <TouchableOpacity onPress={() => {setPasswordVisible(!passwordVisible)}}>
           { passwordVisible ? <Feather name="eye" size={24} color="#666" /> : <Feather name="eye-off" size={24} color="#666" /> }
         </TouchableOpacity>
       </View>
