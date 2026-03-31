@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import MatchButtons from './MatchButton';
 
 export default function CongratsMatch() {
   return (
@@ -8,6 +9,7 @@ export default function CongratsMatch() {
         Congrats it's a Match!
       </Text>
       <Text style={styles.subtitle}>Start a conversation now to each other</Text>
+      <MatchButtons/>
     </View>
   );
 }
