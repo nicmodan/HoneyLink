@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,40 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Modal,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useRouter } from 'expo-router';
 import styles from '../../style';
 import Feather from '@expo/vector-icons/Feather';
+import { gql, useMutation } from '@apollo/client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const SIGNUP = gql`
+  mutation SignUp($email: String!, $password: String!, $username: String!) {
+    signup(email: $email, password: $password, username: $username) {
+      token
+      user {
+        id
+        username
+        email
+        isVerified
+        profile {
+          bio
+          age
+          city
+        }
+        subscription {
+          plan
+          status
+        }
+      }
+    }
+  }
+`;
 
 const SignUpScreen = () => {
   const router = useRouter();
@@ -20,108 +48,183 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [name, setName] = useState('');
+  const [popup, setPopup] = useState({
+    visible: false,
+    type: 'success',
+    title: '',
+    message: '',
+  });
 
+  const showPopup = (type, title, message) => {
+    setPopup({
+      visible: true,
+      type,
+      title,
+      message,
+    });
+  };
 
-  // A placeholder function for the sign-up logic
+  const closePopup = () => {
+    setPopup((currentPopup) => ({ ...currentPopup, visible: false }));
+  };
+
+  const [doSignUp, { loading }] = useMutation(SIGNUP, {
+    onCompleted: async ({ signup }) => {
+      await AsyncStorage.setItem('token', signup.token);
+      showPopup('success', 'Account created', 'Your account has been created successfully.');
+    },
+    onError: (mutationError) => {
+      showPopup('error', 'Sign up failed', mutationError.message);
+    },
+  });
+
   const handleSignUp = () => {
-    console.log('Signing up with:', { email, password });
-    // Here you would add your sign-up logic (e.g., API call)
-    // On success, you might navigate the user to the main app:
-    // router.replace('/(tabs)/homepage');
+    if (!name || !email || !password || !confirmPassword) {
+      showPopup('error', 'Missing information', 'Please fill in all fields before signing up.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      showPopup('error', 'Password mismatch', 'Password and confirm password must match.');
+      return;
+    }
+
+    doSignUp({ variables: { email, password, username: name } });
   };
 
   return (
     <SafeAreaView style={styles.signUpContainer} edges={['top', 'bottom']}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}>
-        {/* Header is part of the main view, not scrollable */}
-        <View style={styles.signUpHeader}>
-          <TouchableOpacity onPress={() => router.back()} style={styles.signUpBackArrow}>
-            <Entypo name="chevron-left" size={30} color="black" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle2}>Sign Up</Text>
-        </View>
-
-        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-          <Text style={styles.signUpTitle}>Create an account</Text>
-          <Text style={styles.signUpSubtitle}>Create an account to continue</Text>
-
-          <View style={styles.signUpForm}>
-
-            <TextInput
-              placeholder="User Name"
-              style={styles.signUpInput}
-              autoCapitalize="none"              
-            />
-
-            <TextInput
-              placeholder="Email"
-              style={styles.signUpInput}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <View style={styles.signUpPasswordContainer}>
-              <TextInput
-                placeholder="Password"
-                style={[styles.signUpInput, styles.signUpPasswordInput]}
-                secureTextEntry={!passwordVisible}
-                value={password}
-                onChangeText={setPassword}
-              />
-              <TouchableOpacity
-                style={styles.signUpPasswordToggle}
-                onPress={() => setPasswordVisible(!passwordVisible)}>
-                {passwordVisible ? (
-                  <Feather name="eye" size={24} color="#666" />
-                ) : (
-                  <Feather name="eye-off" size={24} color="#666" />
-                )}
-              </TouchableOpacity>
-            </View>
-            <View style={styles.signUpPasswordContainer}>
-              <TextInput
-                placeholder="Confirm Password"
-                style={[styles.signUpInput, styles.signUpPasswordInput]}
-                secureTextEntry={!passwordVisible}
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-              />
-              <TouchableOpacity
-                style={styles.signUpPasswordToggle}
-                onPress={() => setPasswordVisible(!passwordVisible)}>
-                {passwordVisible ? (
-                  <Feather name="eye" size={24} color="#666" />
-                ) : (
-                  <Feather name="eye-off" size={24} color="#666" />
-                )}
-              </TouchableOpacity>
-            </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}>
+          <View style={styles.signUpHeader}>
+            <TouchableOpacity onPress={() => router.back()} style={styles.signUpBackArrow}>
+              <Entypo name="chevron-left" size={30} color="black" />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle2}>Sign Up</Text>
           </View>
-          
-          <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-            <Text style={styles.signUpButtonText}>Sign Up</Text>
-          </TouchableOpacity>
 
-          <View style={styles.signUpTermsContainer}>
-            <Text style={styles.signUpTermsText}>
-              By signing up, you agree to our{' '}
-              <Text style={styles.signUpTermsLink}>Terms</Text> and{' '}
-              <Text style={styles.signUpTermsLink}>Conditions</Text>.
+          <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+            <Text style={styles.signUpTitle}>Create an account</Text>
+            <Text style={styles.signUpSubtitle}>Create an account to continue</Text>
+
+            <View style={styles.signUpForm}>
+              <TextInput
+                placeholder="User Name"
+                style={styles.signUpInput}
+                autoCapitalize="none"
+                value={name}
+                onChangeText={setName}
+              />
+
+              <TextInput
+                placeholder="Email"
+                style={styles.signUpInput}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={email}
+                onChangeText={setEmail}
+              />
+
+              <View style={styles.signUpPasswordContainer}>
+                <TextInput
+                  placeholder="Password"
+                  style={[styles.signUpInput, styles.signUpPasswordInput]}
+                  secureTextEntry={!passwordVisible}
+                  value={password}
+                  onChangeText={setPassword}
+                />
+                <TouchableOpacity
+                  style={styles.signUpPasswordToggle}
+                  onPress={() => setPasswordVisible(!passwordVisible)}>
+                  {passwordVisible ? (
+                    <Feather name="eye" size={24} color="#666" />
+                  ) : (
+                    <Feather name="eye-off" size={24} color="#666" />
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.signUpPasswordContainer}>
+                <TextInput
+                  placeholder="Confirm Password"
+                  style={[styles.signUpInput, styles.signUpPasswordInput]}
+                  secureTextEntry={!passwordVisible}
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                />
+                <TouchableOpacity
+                  style={styles.signUpPasswordToggle}
+                  onPress={() => setPasswordVisible(!passwordVisible)}>
+                  {passwordVisible ? (
+                    <Feather name="eye" size={24} color="#666" />
+                  ) : (
+                    <Feather name="eye-off" size={24} color="#666" />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <TouchableOpacity
+              style={[styles.signUpButton, loading && styles.authButtonDisabled]}
+              onPress={handleSignUp}
+              disabled={loading}>
+              <Text style={styles.signUpButtonText}>{loading ? 'Signing Up...' : 'Sign Up'}</Text>
+            </TouchableOpacity>
+
+            <View style={styles.signUpTermsContainer}>
+              <Text style={styles.signUpTermsText}>
+                By signing up, you agree to our{' '}
+                <Text style={styles.signUpTermsLink}>Terms</Text> and{' '}
+                <Text style={styles.signUpTermsLink}>Conditions</Text>.
+              </Text>
+            </View>
+          </ScrollView>
+
+          <View style={styles.signUpFooter}>
+            <Text style={styles.signUpFooterText}>Already have an account?</Text>
+            <TouchableOpacity onPress={() => router.replace('/LoginUI')}>
+              <Text style={styles.signUpFooterLink}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+
+      <Modal
+        transparent
+        animationType="fade"
+        visible={popup.visible}
+        onRequestClose={closePopup}>
+        <View style={styles.popupOverlay}>
+          <View style={styles.popupCard}>
+            <Text
+              style={[
+                styles.popupTitle,
+                popup.type === 'error' ? styles.popupTitleError : styles.popupTitleSuccess,
+              ]}>
+              {popup.title}
             </Text>
-          </View>
-        </ScrollView>
+            <Text style={styles.popupMessage}>{popup.message}</Text>
+            <TouchableOpacity
+              style={[
+                styles.popupButton,
+                popup.type === 'error' ? styles.popupButtonError : styles.popupButtonSuccess,
+              ]}
+              onPress={() => {
+                const isSuccess = popup.type === 'success';
+                closePopup();
 
-        {/* Footer sticks to the bottom */}
-        <View style={styles.signUpFooter}>
-          <Text style={styles.signUpFooterText}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => router.replace('/LoginUI')}>
-            <Text style={styles.signUpFooterLink}>Login</Text>
-          </TouchableOpacity>
+                if (isSuccess) {
+                  router.replace('/(tabs)/LoginUI');
+                }
+              }}>
+              <Text style={styles.popupButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </KeyboardAvoidingView>
+      </Modal>
     </SafeAreaView>
   );
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../style';
 
@@ -35,10 +34,14 @@ function TermsText() {
   return <Text style={styles.termsText}>Terms of Use & Privacy Policy</Text>;
 }
 
-export default function SocialLogin({ onFacebookPress, onGmailPress }) {
+export default function SocialLogin({ onFacebookPress, onGmailPress, onLogin, loading }) {
   return (
     <View style={styles.socialLoginContainer}>
+      <TouchableOpacity style={styles.loginButton} onPress={onLogin}>
+        <Text style={styles.loginButtonText}>{loading ? 'Logging in...' : 'Log In'}</Text>
+      </TouchableOpacity>
       <Divider />
+
       <FacebookButton onPress={onFacebookPress} />
       <GmailButton onPress={onGmailPress} />
       <TermsText />
