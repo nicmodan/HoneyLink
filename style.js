@@ -217,7 +217,7 @@ const styles =  StyleSheet.create({
   containerGallery: {
     flex: 0.5,
     backgroundColor: '#fff',
-    justifyContent: 'center',      // center card vertically
+    justifyContent: 'center',
     alignItems: 'center',
   },
 
@@ -323,7 +323,6 @@ const styles =  StyleSheet.create({
 
   // ── Grid ──────────────────────────────────────────────
   grid: {
-    // Match TILE_SIZE math: outer padding (2*4) + tile margins (6*4) = GRID_SPACING*(COLUMNS+1)
     paddingHorizontal: GRID_SPACING / 2,
     paddingTop: 14,
     paddingBottom: 14,
@@ -387,13 +386,10 @@ const styles =  StyleSheet.create({
     paddingHorizontal: 24,
   },
 
-  // Use SafeAreaView for top/bottom padding in your component
-  // e.g., <SafeAreaView style={styles.signUpContainer} edges={['top', 'bottom']}>
-
   signUpHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 16, // Adjust as needed
+    paddingTop: 16,
     marginBottom: 24,
   },
 
@@ -481,12 +477,11 @@ const styles =  StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  // Place the footer outside the ScrollView for it to stick to the bottom
   signUpFooter: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20, // Space from bottom and content
+    paddingVertical: 20,
   },
 
   signUpFooterText: {
@@ -532,24 +527,6 @@ const styles =  StyleSheet.create({
   },
   fab: {
     position: "absolute",
-<<<<<<< HEAD
-    bottom: 55,
-    backgroundColor: "#ff2b78",
-    width: 50,
-    height: 50,
-    borderRadius: 32.5,
-    justifyContent: "center",
-    alignItems: "center",
-
-    // Shadow (iOS)
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.7,
-    shadowRadius: 6,
-
-    // Shadow (Android)
-    elevation: 8
-=======
     left: "63%",
     marginLeft: -30,
     backgroundColor: "#FF4D6D",
@@ -617,18 +594,6 @@ const styles =  StyleSheet.create({
     height: 92,
     borderRadius: 46,
     marginBottom: 14,
-  },
-
-  profileName: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: "#111827",
-    marginBottom: 6,
-  },
-
-  profileLocation: {
-    fontSize: 14,
-    color: "#9CA3AF",
   },
 
   profileStatsRow: {
@@ -826,9 +791,6 @@ const styles =  StyleSheet.create({
     color: "#111827",
     paddingVertical: 0,
     minHeight: 24,
-<<<<<<< HEAD
->>>>>>> df61004 (Add editable profile details screen)
-=======
   },
 
   defaultProfileScreen: {
@@ -1035,8 +997,7 @@ const styles =  StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "700",
->>>>>>> ba41656 (gql server)
-  }
+  },
 })
 
 export default styles;
