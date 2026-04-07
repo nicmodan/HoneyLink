@@ -26,6 +26,11 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
       router.push("/");
     }
 
+     if (tab === "favorites") {
+    router.push("/explore");  // 👈 add this
+  }
+
+
     if (tab === "profile") {
       router.push("/profile");
     }
