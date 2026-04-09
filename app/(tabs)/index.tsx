@@ -1,20 +1,13 @@
-import { router } from "expo-router";
-import React, { useState } from "react";
-import Navigation from "./navigation";
+import { router } from 'expo-router';
+import React from 'react';
+import { ImageBackground, Pressable, Text, View } from 'react-native';
+import styles from '../../style';
 
-import {
-  ImageBackground,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
-import styles from '../../style'
 export default function HomeScreen() {
-  const [activeTab, setActiveTab] = useState("home");
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={require("../../assets/images/Couples.jpg")}
+        source={require('../../assets/images/Couples.jpg')}
         resizeMode="cover"
         style={styles.background}
       >
@@ -22,23 +15,15 @@ export default function HomeScreen() {
         <View style={styles.content}>
           <Text style={styles.displayText}>Find Your Perfect Match Today</Text>
 
-          <Pressable
-            style={styles.primaryButton}
-            onPress={() => router.push("/LoginUI")}
-          >
+          <Pressable style={styles.primaryButton} onPress={() => router.push('/LoginUI')}>
             <Text style={styles.primaryButtonText}>Login</Text>
           </Pressable>
 
-          <Pressable
-            style={styles.secondaryButton}
-            onPress={() => router.push("/signUp")}
-          >
-            <Text style={styles.secondaryButtonText}>Signup</Text>
+          <Pressable style={styles.secondaryButton} onPress={() => router.push('/signUp')}>
+            <Text style={styles.secondaryButtonText}>Sign Up</Text>
           </Pressable>
         </View>
       </ImageBackground>
-
-      <Navigation activeTab={activeTab} onTabPress={setActiveTab} />
     </View>
   );
 }

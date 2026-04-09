@@ -34,12 +34,12 @@ const ProfileHeader = () => {
       <View style={styles.defaultProfileStatsRow}>
         <View style={styles.defaultProfileStat}>
           <Text style={styles.defaultProfileStatNumber}>120</Text>
-          <Text style={styles.defaultProfileStatLabel}>Followers</Text>
+          <Text style={styles.defaultProfileStatLabel}>Matches</Text>
         </View>
 
         <View style={styles.defaultProfileStat}>
           <Text style={styles.defaultProfileStatNumber}>300</Text>
-          <Text style={styles.defaultProfileStatLabel}>Following</Text>
+          <Text style={styles.defaultProfileStatLabel}>Likes</Text>
         </View>
 
         <View style={styles.defaultProfileStat}>

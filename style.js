@@ -393,7 +393,7 @@ const styles =  StyleSheet.create({
   },
   fab: {
     position: "absolute",
-    left: "63%",
+    left: "50%",
     marginLeft: -30,
     backgroundColor: "#FF4D6D",
     width: 60,
@@ -875,7 +875,73 @@ const styles =  StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "700",
-  }
+  },
+
+  // Popup / Modal styles (used in LoginUI)
+  popupOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.45)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  popupCard: {
+    width: "82%",
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 28,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 10,
+  },
+
+  popupTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+
+  popupTitleSuccess: {
+    color: "#22C55E",
+  },
+
+  popupTitleError: {
+    color: "#EF4444",
+  },
+
+  popupMessage: {
+    fontSize: 14,
+    color: "#4B5563",
+    textAlign: "center",
+    lineHeight: 20,
+    marginBottom: 20,
+  },
+
+  popupButton: {
+    width: "100%",
+    height: 46,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  popupButtonSuccess: {
+    backgroundColor: "#ff2b78",
+  },
+
+  popupButtonError: {
+    backgroundColor: "#EF4444",
+  },
+
+  popupButtonText: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "700",
+  },
 })
 
 export default styles;

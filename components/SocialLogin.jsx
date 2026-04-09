@@ -1,12 +1,13 @@
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import styles from '../style';
 
 
-function LogIn() {
+function LogIn({ onPress, loading }) {
   return (
-    <TouchableOpacity style={styles.loginButton}>
-      <Text style={styles.loginButtonText}>Log In</Text>
+    <TouchableOpacity style={styles.loginButton} onPress={onPress}>
+      <Text style={styles.loginButtonText}>{loading ? 'Logging in...' : 'Log In'}</Text>
     </TouchableOpacity>
   )
 }
@@ -44,10 +45,10 @@ function TermsText() {
   return <Text style={styles.termsText}>Terms of Use & Privacy Policy</Text>;
 }
 
-export default function SocialLogin({ onFacebookPress, onGmailPress }) {
+export default function SocialLogin({ onFacebookPress, onGmailPress, onLogin, loading = false }) {
   return (
     <View style={styles.socialLoginContainer}>
-      <LogIn />
+      <LogIn onPress={onLogin} loading={loading} />
       <Divider />
       <FacebookButton onPress={onFacebookPress} />
       <GmailButton onPress={onGmailPress} />
