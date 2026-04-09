@@ -28,7 +28,7 @@ export default function MatchesScreen() {
     try {
       const { data: chatData } = await createChat({ variables: { userId } });
       if (chatData?.createChat?.id) {
-        router.push({ pathname: '/chat-room', params: { chatId: chatData.createChat.id } });
+        router.push({ pathname: '/chat-room', params: { chatId: chatData.createChat.id, chatName: other.username ?? 'Chat' } });
       }
     } catch (e: any) {
       console.warn('Create chat error:', e.message);
