@@ -1,9 +1,8 @@
 import React from 'react';
-import { Platform, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '@/style';
 
 type Props = {
   activeTab: string;
@@ -16,9 +15,10 @@ const GREY = '#999';
 const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const bottomInset = Platform.OS === 'ios' ? Math.max(insets.bottom, 10) : 15;
+  const bottomPad = Platform.OS === 'ios' ? Math.max(insets.bottom, 8) : 8;
+  const barHeight = 60 + bottomPad;
 
-  const handleTabPress = (tab: string) => {
+  const go = (tab: string) => {
     onTabPress?.(tab);
     if (tab === 'home') router.push('/swipe');
     if (tab === 'favorites') router.push('/matches');
@@ -27,39 +27,80 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
     if (tab === 'add') router.push('/shorts');
   };
 
-  const iconColor = (tab: string) => (activeTab === tab ? PINK : GREY);
+  const color = (tab: string) => (activeTab === tab ? PINK : GREY);
 
   return (
-    <View
-      style={[
-        styles.navigationContainer,
-        { paddingBottom: bottomInset, height: 72 + bottomInset },
-      ]}>
-      <TouchableOpacity onPress={() => handleTabPress('home')}>
-        <Ionicons name="home-outline" size={24} color={iconColor('home')} />
+    <View style={[styles.bar, { height: barHeight, paddingBottom: bottomPad }]}>
+      {/* Left two tabs */}
+      <TouchableOpacity style={styles.tab} onPress={() => go('home')}>
+        <Ionicons name="home-outline" size={24} color={color('home')} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.tab} onPress={() => go('favorites')}>
+        <Ionicons name="heart-outline" size={24} color={color('favorites')} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleTabPress('favorites')}>
-        <Ionicons name="heart-outline" size={24} color={iconColor('favorites')} />
+      {/* Centre FAB placeholder — actual button is absolutely positioned */}
+      <View style={styles.fabPlaceholder} />
+
+      {/* Right two tabs */}
+      <TouchableOpacity style={styles.tab} onPress={() => go('messages')}>
+        <Ionicons name="chatbubble-outline" size={24} color={color('messages')} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.tab} onPress={() => go('profile')}>
+        <Ionicons name="person-outline" size={24} color={color('profile')} />
       </TouchableOpacity>
 
-      {/* Floating Add / Shorts Button */}
+      {/* Centred floating button */}
       <TouchableOpacity
-        style={[styles.fab, { bottom: Platform.OS === 'ios' ? bottomInset + 4 : 57 }]}
-        onPress={() => handleTabPress('add')}>
-        <Ionicons name="play" size={24} color="#fff" />
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => handleTabPress('messages')}>
-        <Ionicons name="chatbubble-outline" size={24} color={iconColor('messages')} />
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => handleTabPress('profile')}>
-        <Ionicons name="person-outline" size={24} color={iconColor('profile')} />
+        style={[styles.fab, { bottom: bottomPad + 8 }]}
+        onPress={() => go('add')}
+        activeOpacity={0.85}>
+        <Ionicons name="play" size={26} color="#fff" />
       </TouchableOpacity>
     </View>
    
   );
 };
+
+const styles = StyleSheet.create({
+  bar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#ddd',
+    paddingHorizontal: 8,
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 52,
+  },
+  fabPlaceholder: {
+    width: 68,
+  },
+  fab: {
+    position: 'absolute',
+    left: '50%',
+    marginLeft: -30,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#FF4D6D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 6,
+    shadowColor: '#FF4D6D',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 8,
+    zIndex: 10,
+  },
+});
 
 export default Navigation;
