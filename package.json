@@ -21,9 +21,9 @@
     "expo-font": "~55.0.4",
     "expo-haptics": "~55.0.9",
     "expo-image": "~55.0.6",
-    "expo-linking": "~55.0.8",
-    "expo-router": "~55.0.7",
-    "expo-splash-screen": "~55.0.12",
+    "expo-linking": "~55.0.7",
+    "expo-router": "~55.0.5",
+    "expo-splash-screen": "~55.0.11",
     "expo-status-bar": "~55.0.4",
     "expo-symbols": "~55.0.5",
     "expo-web-browser": "~55.0.10",
@@ -37,7 +37,9 @@
     "react-native-screens": "~4.23.0",
     "react-native-svg": "^15.15.4",
     "react-native-vector-icons": "^10.3.0",
-    "react-native-web": "^0.21.0"
+    "react-native-web": "^0.21.0",
+    "expo-secure-store": "~14.2.0",
+    "expo-av": "~15.1.6"
   },
   "devDependencies": {
     "@types/react": "~19.2.10",

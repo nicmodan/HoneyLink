@@ -1,9 +1,4 @@
-import { gql } from "@apollo/client";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Entypo from "@expo/vector-icons/Entypo";
-import Feather from "@expo/vector-icons/Feather";
-import { useRouter } from "expo-router";
-import { useState } from "react";
+import React, { useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -12,92 +7,38 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "../../style";
-import { useMutation } from "@apollo/client/react";
-
-const SIGNUP = gql`
-  mutation Signup($email: String!, $password: String!, $username: String!) {
-    signup(email: $email, password: $password, username: $username) {
-      token
-      user {
-        id
-        username
-        email
-        isVerified
-        profile {
-          bio
-          age
-          city
-        }
-        subscription {
-          plan
-          status
-        }
-      }
-    }
-  }
-`;
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Entypo from '@expo/vector-icons/Entypo';
+import { useRouter } from 'expo-router';
+import styles from '../../style';
+import Feather from '@expo/vector-icons/Feather';
 
 const SignUpScreen = () => {
   const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const [signUpUser, { loading }] = useMutation(SIGNUP, {
-    onCompleted: async ({ signup }) => {
-      try {
-        await AsyncStorage.setItem("token", signup.token);
-        console.log("Signup successful:", signup.user.username);
-        Alert.alert("Success", "Account created successfully");
-        router.replace("/(tabs)/homepage");
-      } catch (err) {
-        console.error("Storage error:", err);
-        Alert.alert("Error", "Could not save token");
-      }
-    },
-    onError: (err) => {
-      console.error("Signup failed:", err.message);
-      Alert.alert("Signup Failed", err.message);
-    },
-  });
 
-  const handleSignUp = async () => {
-    if (!username || !email || !password || !confirmPassword) {
-      Alert.alert("Missing fields", "Please fill all fields");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
-      return;
-    }
-
-    try {
-      await signUpUser({
-        variables: {
-          email,
-          password,
-          username,
-        },
-      });
-    } catch (err) {
-      console.log("Signup error:", err);
-    }
+  // A placeholder function for the sign-up logic
+  const handleSignUp = () => {
+    console.log('Signing up with:', { email, password });
+    // Here you would add your sign-up logic (e.g., API call)
+    // On success, you might navigate the user to the main app:
+    // router.replace('/(tabs)/homepage');
   };
 
   return (
-    <SafeAreaView style={styles.signUpContainer} edges={["top", "bottom"]}>
+    <SafeAreaView style={styles.signUpContainer} edges={['top', 'bottom']}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}>
+        {/* Header is part of the main view, not scrollable */}
         <View style={styles.signUpHeader}>
           <TouchableOpacity
             onPress={() => router.back()}
@@ -125,7 +66,6 @@ const SignUpScreen = () => {
               value={username}
               onChangeText={setUsername}
             />
-
             <TextInput
               placeholder="Email"
               style={styles.signUpInput}
@@ -145,8 +85,7 @@ const SignUpScreen = () => {
               />
               <TouchableOpacity
                 style={styles.signUpPasswordToggle}
-                onPress={() => setPasswordVisible(!passwordVisible)}
-              >
+                onPress={() => setPasswordVisible(!passwordVisible)}>
                 {passwordVisible ? (
                   <Feather name="eye" size={24} color="#666" />
                 ) : (
@@ -165,8 +104,7 @@ const SignUpScreen = () => {
               />
               <TouchableOpacity
                 style={styles.signUpPasswordToggle}
-                onPress={() => setPasswordVisible(!passwordVisible)}
-              >
+                onPress={() => setPasswordVisible(!passwordVisible)}>
                 {passwordVisible ? (
                   <Feather name="eye" size={24} color="#666" />
                 ) : (
@@ -175,15 +113,9 @@ const SignUpScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-
-          <TouchableOpacity
-            style={styles.signUpButton}
-            onPress={handleSignUp}
-            disabled={loading}
-          >
-            <Text style={styles.signUpButtonText}>
-              {loading ? "Signing Up..." : "Sign Up"}
-            </Text>
+          
+          <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+            <Text style={styles.signUpButtonText}>Sign Up</Text>
           </TouchableOpacity>
 
           <View style={styles.signUpTermsContainer}>
@@ -197,7 +129,7 @@ const SignUpScreen = () => {
 
         <View style={styles.signUpFooter}>
           <Text style={styles.signUpFooterText}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => router.replace("/LoginUI")}>
+          <TouchableOpacity onPress={() => router.replace('/LoginUI')}>
             <Text style={styles.signUpFooterLink}>Login</Text>
           </TouchableOpacity>
         </View>

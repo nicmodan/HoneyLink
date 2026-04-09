@@ -6,12 +6,10 @@ import client from "../../scripts/apollo";
 
 export default function TabLayout() {
   return (
-    <ApolloProvider client={client}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
-    </ApolloProvider>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    />
   );
 }

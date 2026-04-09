@@ -1,94 +1,61 @@
-import React from "react";
-import {
-  Platform,
-  View,
-  TouchableOpacity,
-} from "react-native";
-import { useRouter } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Icon from "@react-native-vector-icons/ionicons";
-import styles from "@/style";
+import React from 'react';
+import { Platform, TouchableOpacity, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import styles from '@/style';
 
 type Props = {
   activeTab: string;
   onTabPress?: (tab: string) => void;
 };
 
+const PINK = '#FF4D6D';
+const GREY = '#999';
+
 const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const bottomInset = Platform.OS === "ios" ? Math.max(insets.bottom, 10) : 15;
+  const bottomInset = Platform.OS === 'ios' ? Math.max(insets.bottom, 10) : 15;
 
   const handleTabPress = (tab: string) => {
     onTabPress?.(tab);
-
-    if (tab === "home") {
-      router.push("/");
-    }
-
-    if (tab === "profile") {
-      router.push("/profile");
-    }
+    if (tab === 'home') router.push('/swipe');
+    if (tab === 'favorites') router.push('/matches');
+    if (tab === 'messages') router.push('/messages');
+    if (tab === 'profile') router.push('/profile');
+    if (tab === 'add') router.push('/shorts');
   };
 
-  return (
+  const iconColor = (tab: string) => (activeTab === tab ? PINK : GREY);
 
+  return (
     <View
       style={[
         styles.navigationContainer,
-        {
-          paddingBottom: bottomInset,
-          height: 72 + bottomInset,
-        },
-      ]}
-    >
-      {/* Home */}
-      <TouchableOpacity onPress={() => handleTabPress("home")}>
-        <Icon
-          name="home-outline"
-          size={24}
-          color={activeTab === "home" ? "#FF4D6D" : "#999"}
-        />
+        { paddingBottom: bottomInset, height: 72 + bottomInset },
+      ]}>
+      <TouchableOpacity onPress={() => handleTabPress('home')}>
+        <Ionicons name="home-outline" size={24} color={iconColor('home')} />
       </TouchableOpacity>
 
-      {/* Favorites */}
-      <TouchableOpacity onPress={() => handleTabPress("favorites")}>
-        <Icon
-          name="heart-outline"
-          size={24}
-          color={activeTab === "favorites" ? "#FF4D6D" : "#999"}
-        />
+      <TouchableOpacity onPress={() => handleTabPress('favorites')}>
+        <Ionicons name="heart-outline" size={24} color={iconColor('favorites')} />
       </TouchableOpacity>
 
-      {/* Floating Add Button */}
+      {/* Floating Add / Shorts Button */}
       <TouchableOpacity
-        style={[
-          styles.fab,
-          {
-            bottom: Platform.OS === "ios" ? bottomInset + 4 : 57,
-          },
-        ]}
-        onPress={() => handleTabPress("add")}
-      >
-        <Icon name="add" size={28} color="#fff" />
+        style={[styles.fab, { bottom: Platform.OS === 'ios' ? bottomInset + 4 : 57 }]}
+        onPress={() => handleTabPress('add')}>
+        <Ionicons name="play" size={24} color="#fff" />
       </TouchableOpacity>
 
-      {/* Messages */}
-      <TouchableOpacity onPress={() => handleTabPress("messages")}>
-        <Icon
-          name="chatbubble-outline"
-          size={24}
-          color={activeTab === "messages" ? "#FF4D6D" : "#999"}
-        />
+      <TouchableOpacity onPress={() => handleTabPress('messages')}>
+        <Ionicons name="chatbubble-outline" size={24} color={iconColor('messages')} />
       </TouchableOpacity>
 
-      {/* Profile */}
-      <TouchableOpacity onPress={() => handleTabPress("profile")}>
-        <Icon
-          name="person-outline"
-          size={24}
-          color={activeTab === "profile" ? "#FF4D6D" : "#999"}
-        />
+      <TouchableOpacity onPress={() => handleTabPress('profile')}>
+        <Ionicons name="person-outline" size={24} color={iconColor('profile')} />
       </TouchableOpacity>
     </View>
    

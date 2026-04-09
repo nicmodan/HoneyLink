@@ -532,25 +532,7 @@ const styles =  StyleSheet.create({
   },
   fab: {
     position: "absolute",
-<<<<<<< HEAD
-    bottom: 55,
-    backgroundColor: "#ff2b78",
-    width: 50,
-    height: 50,
-    borderRadius: 32.5,
-    justifyContent: "center",
-    alignItems: "center",
-
-    // Shadow (iOS)
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.7,
-    shadowRadius: 6,
-
-    // Shadow (Android)
-    elevation: 8
-=======
-    left: "63%",
+    left: "50%",
     marginLeft: -30,
     backgroundColor: "#FF4D6D",
     width: 60,
@@ -826,9 +808,6 @@ const styles =  StyleSheet.create({
     color: "#111827",
     paddingVertical: 0,
     minHeight: 24,
-<<<<<<< HEAD
->>>>>>> df61004 (Add editable profile details screen)
-=======
   },
 
   defaultProfileScreen: {
@@ -1035,8 +1014,73 @@ const styles =  StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "700",
->>>>>>> ba41656 (gql server)
-  }
+  },
+
+  // Popup / Modal styles (used in LoginUI)
+  popupOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.45)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  popupCard: {
+    width: "82%",
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 28,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 10,
+  },
+
+  popupTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+
+  popupTitleSuccess: {
+    color: "#22C55E",
+  },
+
+  popupTitleError: {
+    color: "#EF4444",
+  },
+
+  popupMessage: {
+    fontSize: 14,
+    color: "#4B5563",
+    textAlign: "center",
+    lineHeight: 20,
+    marginBottom: 20,
+  },
+
+  popupButton: {
+    width: "100%",
+    height: 46,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  popupButtonSuccess: {
+    backgroundColor: "#ff2b78",
+  },
+
+  popupButtonError: {
+    backgroundColor: "#EF4444",
+  },
+
+  popupButtonText: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "700",
+  },
 })
 
 export default styles;

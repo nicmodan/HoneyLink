@@ -1,100 +1,154 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Image,
   Pressable,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   View,
-} from "react-native";
-import { router } from "expo-router";
-import Icon from "@react-native-vector-icons/ionicons";
-import Navigation from "./navigation";
-import styles from "@/style";
+} from 'react-native';
+import { router } from 'expo-router';
+import Icon from '@expo/vector-icons/Ionicons';
+import { useQuery, useMutation } from '@apollo/client/react';
+import { ME, UPDATE_PROFILE } from '../../scripts/graphql';
 
-export default function ProfileScreen() {
-  const [profileForm, setProfileForm] = useState({
-    userName: "Divine",
-    email: "divine@gmail.com",
-    phone: "",
-    location: "my house",
-    dateOfBirth: "20-8-1934",
+const PINK = '#E8476A';
+
+export default function EditProfileScreen() {
+  const { data, loading } = useQuery(ME);
+  const [doUpdate, { loading: saving }] = useMutation(UPDATE_PROFILE, {
+    refetchQueries: [{ query: ME }],
+    onCompleted: () => {
+      Alert.alert('Saved', 'Profile updated successfully.');
+      router.back();
+    },
+    onError: (e) => Alert.alert('Error', e.message),
   });
 
-  const profileFields = [
-    { key: "userName", label: "User Name", value: profileForm.userName },
-    { key: "email", label: "Email", value: profileForm.email },
-    { key: "phone", label: "Phone", value: profileForm.phone },
-    { key: "location", label: "Location", value: profileForm.location },
-    { key: "dateOfBirth", label: "Date of Birth", value: profileForm.dateOfBirth },
-  ] as const;
+  const [form, setForm] = useState({ bio: '', age: '', city: '', interests: '' });
+
+  useEffect(() => {
+    if (data?.me?.profile) {
+      const p = data.me.profile;
+      setForm({
+        bio: p.bio ?? '',
+        age: p.age ? String(p.age) : '',
+        city: p.city ?? '',
+        interests: (p.interests ?? []).join(', '),
+      });
+    }
+  }, [data]);
+
+  const handleSave = () => {
+    const input: any = {
+      bio: form.bio,
+      city: form.city,
+      interests: form.interests.split(',').map((s: string) => s.trim()).filter(Boolean),
+    };
+    if (form.age) input.age = parseInt(form.age, 10);
+    doUpdate({ variables: { input } });
+  };
+
+  const photo = data?.me?.profile?.photos?.[0] || 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400';
 
   return (
-    <SafeAreaView style={styles.profileDetailsScreen}>
-      <View style={styles.profileDetailsHeader}>
-        <Pressable
-          onPress={() => router.back()}
-          style={styles.profileDetailsHeaderButton}
-        >
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.header}>
+        <Pressable onPress={() => router.back()} style={styles.headerBtn}>
           <Icon name="chevron-back" size={22} color="#111827" />
         </Pressable>
-
-        <Text style={styles.profileDetailsHeaderTitle}>Profile</Text>
-
-        <Pressable
-          style={styles.profileDetailsSaveButton}
-          onPress={() => Alert.alert("Saved", "Profile details updated.")}
-        >
-          <Text style={styles.profileDetailsSaveText}>Save</Text>
+        <Text style={styles.headerTitle}>Edit Profile</Text>
+        <Pressable style={styles.saveBtn} onPress={handleSave} disabled={saving}>
+          {saving ? (
+            <ActivityIndicator size="small" color={PINK} />
+          ) : (
+            <Text style={styles.saveText}>Save</Text>
+          )}
         </Pressable>
       </View>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.profileDetailsContent}
-      >
-        <View style={styles.profileDetailsAvatarWrap}>
-          <View style={styles.profileDetailsAvatarFrame}>
-            <Image
-              source={require("../../assets/images/sample.jpg")}
-              style={styles.profileDetailsAvatar}
-            />
-
-            <Pressable
-              style={styles.profileDetailsCameraButton}
-              onPress={() =>
-                Alert.alert("Profile photo", "Photo editing will be connected next.")
-              }
-            >
-              <Icon name="camera-outline" size={16} color="#FFFFFF" />
-            </Pressable>
-          </View>
+      {loading ? (
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={PINK} />
         </View>
-
-        <View style={styles.profileDetailsFields}>
-          {profileFields.map((field) => (
-            <View key={field.label} style={styles.profileDetailsFieldCard}>
-              <Text style={styles.profileDetailsFieldLabel}>{field.label}</Text>
-              <TextInput
-                value={field.value}
-                onChangeText={(text) =>
-                  setProfileForm((current) => ({
-                    ...current,
-                    [field.key]: text,
-                  }))
-                }
-                style={styles.profileDetailsFieldInput}
-                placeholder={field.label}
-                placeholderTextColor="#9CA3AF"
-              />
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
+          {/* Avatar */}
+          <View style={styles.avatarWrap}>
+            <View style={styles.avatarFrame}>
+              <Image source={{ uri: photo }} style={styles.avatar} />
+              <Pressable style={styles.cameraBtn} onPress={() => Alert.alert('Photo', 'Photo upload coming soon.')}>
+                <Icon name="camera-outline" size={16} color="#fff" />
+              </Pressable>
             </View>
-          ))}
-        </View>
-      </ScrollView>
+          </View>
 
-      <Navigation activeTab="profile" />
+          {/* Fields */}
+          <View style={styles.fields}>
+            <FieldCard label="Bio" value={form.bio} onChange={(v) => setForm((f) => ({ ...f, bio: v }))} multiline placeholder="Tell others about yourself..." />
+            <FieldCard label="Age" value={form.age} onChange={(v) => setForm((f) => ({ ...f, age: v }))} keyboardType="numeric" placeholder="Your age" />
+            <FieldCard label="City" value={form.city} onChange={(v) => setForm((f) => ({ ...f, city: v }))} placeholder="Your city" />
+            <FieldCard label="Interests (comma-separated)" value={form.interests} onChange={(v) => setForm((f) => ({ ...f, interests: v }))} placeholder="e.g. hiking, music, travel" />
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
+
+function FieldCard({ label, value, onChange, placeholder, multiline, keyboardType }: any) {
+  return (
+    <View style={styles.fieldCard}>
+      <Text style={styles.fieldLabel}>{label}</Text>
+      <TextInput
+        value={value}
+        onChangeText={onChange}
+        style={[styles.fieldInput, multiline && { height: 90, textAlignVertical: 'top' }]}
+        placeholder={placeholder}
+        placeholderTextColor="#9CA3AF"
+        multiline={multiline}
+        keyboardType={keyboardType ?? 'default'}
+        autoCapitalize="none"
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: '#fff' },
+  centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  headerBtn: { padding: 4 },
+  headerTitle: { fontSize: 17, fontWeight: '700', color: '#111' },
+  saveBtn: { paddingHorizontal: 14, paddingVertical: 6, backgroundColor: PINK, borderRadius: 99 },
+  saveText: { color: '#fff', fontWeight: '700', fontSize: 14 },
+  content: { paddingBottom: 40 },
+  avatarWrap: { alignItems: 'center', paddingVertical: 24 },
+  avatarFrame: { position: 'relative' },
+  avatar: { width: 100, height: 100, borderRadius: 50 },
+  cameraBtn: {
+    position: 'absolute', bottom: 0, right: 0,
+    backgroundColor: PINK, width: 32, height: 32, borderRadius: 16,
+    alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#fff',
+  },
+  fields: { paddingHorizontal: 20 },
+  fieldCard: { marginBottom: 16 },
+  fieldLabel: { fontSize: 12, fontWeight: '600', color: '#888', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 },
+  fieldInput: {
+    borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 12,
+    paddingHorizontal: 14, paddingVertical: 12,
+    fontSize: 15, color: '#111',
+  },
+});
