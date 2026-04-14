@@ -15,7 +15,7 @@ const ProfileHeader = () => {
         <Text style={styles.profileTitle}>Profile</Text>
         
         <TouchableOpacity>
-          <Text style={styles.editButton}>Edit</Text>
+          <Text style={styles.editButton} onPress={router.push('/(tabs)/')}>Edit</Text>
         </TouchableOpacity>
       </View>
 

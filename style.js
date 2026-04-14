@@ -1,8 +1,8 @@
-import { Platform, StatusBar, StyleSheet, } from "react-native";
+import { Platform, StatusBar, StyleSheet, ViewStyle } from "react-native";
 
 import { INNER_WIDTH, GRID_SPACING, TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT } from "./constants/layout"
-const styles =  StyleSheet.create({
-  
+const styles = StyleSheet.create({
+
   // NOTE!!!: Group 1 Places your styles here
   background: {
     flex: 1,
@@ -24,7 +24,7 @@ const styles =  StyleSheet.create({
       default: 24,
     }),
   },
-  
+
   displayText: {
     maxWidth: 240,
     marginBottom: 28,
@@ -62,7 +62,7 @@ const styles =  StyleSheet.create({
     fontWeight: "700",
     color: "#3A3A3A",
   },
-  
+
   // ------------------Group 1 styles End-------------------
 
 
@@ -159,7 +159,7 @@ const styles =  StyleSheet.create({
     color: '#333',
   },
 
-  profileLocation: { 
+  profileLocation: {
     fontSize: 14,
     color: '#666',
     marginTop: 5,
@@ -171,7 +171,27 @@ const styles =  StyleSheet.create({
     borderRadius: 50,
     marginBottom: 10,
   },
-  
+
+  // Match Header styles - by DARE
+  matchHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  matchHeaderTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#000',
+    textAlign: 'center',
+  },
+  matchBackButton: {
+    padding: 5,
+  },
+
   // Email Password Login Section Styles - Micah
   formContainer: {
     width: '100%',
@@ -238,6 +258,39 @@ const styles =  StyleSheet.create({
 
   statLabel: {
     color: '#666',
+  },
+
+  // Overlapping Profiles styles - by Micah
+  profileWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative', // Necessary for absolute children
+  },
+
+  profileImageP: {
+    borderWidth: 3,
+    borderColor: '#fff', // Creates the "cutout" look
+  },
+
+  heartContainer: {
+    position: 'absolute',
+    backgroundColor: '#FF2D55',
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#fff',
+    elevation: 3, // Shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  heartText: {
+    fontSize: 16,
   },
 
   // Social Login Section Styles - by Ifunanya
@@ -433,16 +486,19 @@ const styles =  StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
   },
+
   viewerSlide: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   viewerImage: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
   },
+
   closeBtn: {
     position: 'absolute',
     top: 48,
@@ -455,10 +511,31 @@ const styles =  StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   closeText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: '700',
+  },
+
+  // Match Congrats section by Infunanya
+  titleMC: {
+    color: '#FF3B7C',
+    fontSize: 34,
+    fontWeight: '800',
+    lineHeight: 40,
+    textAlign: 'center',
+    letterSpacing: -0.4,
+    marginBottom: 20,
+  },
+
+  subtitleMC: {
+    color: '#A3A3A3',
+    fontSize: 17,
+    fontWeight: '400',
+    lineHeight: 24,
+    textAlign: 'center',
+    maxWidth: 320,
   },
 
 
@@ -620,7 +697,7 @@ const styles =  StyleSheet.create({
       ios: {
         paddingBottom: 0,
       },
-      android: {  
+      android: {
         paddingBottom: 0,
       }
     })
@@ -634,11 +711,11 @@ const styles =  StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    backgroundColor: '#ff4d6d', 
+    backgroundColor: '#ff4d6d',
     shadowColor: '#000',
     shadowOpacity: 0.35,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },   
+    shadowOffset: { width: 0, height: 5 },
     elevation: 5,
   },
 
