@@ -87,6 +87,9 @@ export const SWIPE_FEED = gql`
         age
         city
         photos
+        gender
+
+        interests
       }
     }
   }
