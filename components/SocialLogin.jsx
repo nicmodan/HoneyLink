@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import styles from '../style';
 
 
@@ -26,7 +25,7 @@ function FacebookButton({ onPress }) {
   return (
     <TouchableOpacity style={[styles.socialButton, styles.facebook]} onPress={onPress}>
       <View style={styles.facebookContent}>
-        <FontAwesome name="facebook" size={24} color="white" style={styles.facebookIcon} />
+        <Text style={styles.facebookIcon}>f</Text>
         <Text style={styles.buttonText}>Sign up with Facebook</Text>
       </View>
     </TouchableOpacity>
@@ -50,9 +49,10 @@ export default function SocialLogin({ onFacebookPress, onGmailPress, onLogin, lo
     <View style={styles.socialLoginContainer}>
       <LogIn onPress={onLogin} loading={loading} />
       <Divider />
+
       <FacebookButton onPress={onFacebookPress} />
       <GmailButton onPress={onGmailPress} />
-      <TermsText />      
+      <TermsText />
     </View>
   );
 }

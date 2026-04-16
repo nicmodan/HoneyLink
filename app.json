@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "x-clone",
-    "slug": "x-clone",
+    "name": "honey-link",
+    "slug": "honey-link",
     "version": "1.0.0",
     "scheme": "honeylink",
     "orientation": "portrait",
@@ -37,8 +37,8 @@
           }
         }
       ],
-      "expo-image",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -34,7 +34,7 @@ const EmailPassword = ({
           value={password}
           onChangeText={setPassword}
         />
-        <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+        <TouchableOpacity onPress={() => {setPasswordVisible(!passwordVisible)}}>
           { passwordVisible ? <Feather name="eye" size={24} color="#666" /> : <Feather name="eye-off" size={24} color="#666" /> }
         </TouchableOpacity>
       </View>

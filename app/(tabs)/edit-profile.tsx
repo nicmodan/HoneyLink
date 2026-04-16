@@ -1,74 +1,97 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Image,
-  Pressable,
-  SafeAreaView,
+  Platform,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
-  TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import { router } from 'expo-router';
-import Icon from '@expo/vector-icons/Ionicons';
-import { useQuery, useMutation } from '@apollo/client/react';
-import { ME, UPDATE_PROFILE } from '../../scripts/graphql';
+import { useFocusEffect } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { useQuery } from '@apollo/client/react';
+import { useRouter } from 'expo-router';
+
+import { ME_WITH_COUNTS } from '../../scripts/graphql';
+import Navigation from './navigation';
 
 const PINK = '#E8476A';
 
-export default function EditProfileScreen() {
-  const { data, loading } = useQuery(ME);
-  const [doUpdate, { loading: saving }] = useMutation(UPDATE_PROFILE, {
-    refetchQueries: [{ query: ME }],
-    onCompleted: () => {
-      Alert.alert('Saved', 'Profile updated successfully.');
-      router.back();
-    },
-    onError: (e) => Alert.alert('Error', e.message),
+interface MeQueryData {
+  me: {
+    username?: string;
+    email?: string;
+    followerCount?: number;
+    followingCount?: number;
+    subscription?: { status?: string; plan?: string };
+    profile?: {
+      bio?: string;
+      age?: number;
+      city?: string;
+      interests?: string[];
+      photos?: string[];
+    };
+  };
+}
+
+export default function ProfileScreen() {
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+
+  const [activeTab, setActiveTab] = useState('profile');
+  const [tab, setTab] = useState<'about' | 'gallery'>('about');
+
+  const { data, loading, refetch } = useQuery<MeQueryData>(ME_WITH_COUNTS, {
+    fetchPolicy: 'network-only',
   });
 
-  const [form, setForm] = useState({ bio: '', age: '', city: '', interests: '' });
+  const me = data?.me;
 
-  useEffect(() => {
-    if (data?.me?.profile) {
-      const p = data.me.profile;
-      setForm({
-        bio: p.bio ?? '',
-        age: p.age ? String(p.age) : '',
-        city: p.city ?? '',
-        interests: (p.interests ?? []).join(', '),
-      });
-    }
-  }, [data]);
+  // Refetch data every time the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch])
+  );
 
-  const handleSave = () => {
-    const input: any = {
-      bio: form.bio,
-      city: form.city,
-      interests: form.interests.split(',').map((s: string) => s.trim()).filter(Boolean),
-    };
-    if (form.age) input.age = parseInt(form.age, 10);
-    doUpdate({ variables: { input } });
+  const handleTabPress = (t: string) => {
+    setActiveTab(t);
+    if (t === 'home') router.push('/swipe');
+    if (t === 'favorites') router.push('/matches');
+    if (t === 'messages') router.push('/messages');
+    if (t === 'add') router.push('/shorts');
   };
 
-  const photo = data?.me?.profile?.photos?.[0] || 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400';
+  const photo =
+    me?.profile?.photos?.[0] ||
+    'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400';
+
+  const topPad =
+    Platform.OS === 'android'
+      ? (StatusBar.currentHeight ?? 0) + 8
+      : insets.top + 8;
+
+  const hasAnyProfileData =
+    me?.profile?.bio ||
+    me?.profile?.age ||
+    me?.profile?.city ||
+    me?.profile?.interests?.length;
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.headerBtn}>
-          <Icon name="chevron-back" size={22} color="#111827" />
-        </Pressable>
-        <Text style={styles.headerTitle}>Edit Profile</Text>
-        <Pressable style={styles.saveBtn} onPress={handleSave} disabled={saving}>
-          {saving ? (
-            <ActivityIndicator size="small" color={PINK} />
-          ) : (
-            <Text style={styles.saveText}>Save</Text>
-          )}
-        </Pressable>
+    <View style={styles.screen}>
+      {/* Header */}
+      <View style={[styles.header, { paddingTop: topPad }]}>
+        <Text style={styles.title}>My Profile</Text>
+        <TouchableOpacity
+          onPress={() => router.push('/edit-profile')}
+          style={styles.editIcon}
+        >
+          <Ionicons name="create-outline" size={24} color={PINK} />
+        </TouchableOpacity>
       </View>
 
       {loading ? (
@@ -76,44 +99,192 @@ export default function EditProfileScreen() {
           <ActivityIndicator size="large" color={PINK} />
         </View>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
-          {/* Avatar */}
-          <View style={styles.avatarWrap}>
-            <View style={styles.avatarFrame}>
-              <Image source={{ uri: photo }} style={styles.avatar} />
-              <Pressable style={styles.cameraBtn} onPress={() => Alert.alert('Photo', 'Photo upload coming soon.')}>
-                <Icon name="camera-outline" size={16} color="#fff" />
-              </Pressable>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[styles.content, { paddingBottom: 100 }]}
+        >
+          {/* Avatar + stats */}
+          <View style={styles.avatarSection}>
+            <Image source={{ uri: photo }} style={styles.avatar} />
+            <Text style={styles.name}>{me?.username ?? 'Your Name'}</Text>
+
+            {me?.profile?.city && (
+              <View style={styles.locationRow}>
+                <Ionicons name="location-outline" size={13} color="#888" />
+                <Text style={styles.location}>{me.profile.city}</Text>
+              </View>
+            )}
+
+            {/* Stats */}
+            <View style={styles.statsRow}>
+              <View style={styles.statItem}>
+                <Text style={styles.statNum}>{me?.followerCount ?? 0}</Text>
+                <Text style={styles.statLabel}>Followers</Text>
+              </View>
+              <View style={styles.statDivider} />
+              <View style={styles.statItem}>
+                <Text style={styles.statNum}>{me?.followingCount ?? 0}</Text>
+                <Text style={styles.statLabel}>Following</Text>
+              </View>
+            </View>
+
+            {/* Subscription badge */}
+            <View
+              style={[
+                styles.planBadge,
+                me?.subscription?.status === 'active' && styles.planBadgePro,
+              ]}
+            >
+              <Text style={styles.planBadgeText}>
+                {me?.subscription?.status === 'active'
+                  ? `${me.subscription.plan?.toUpperCase()} ✨`
+                  : 'FREE'}
+              </Text>
             </View>
           </View>
 
-          {/* Fields */}
-          <View style={styles.fields}>
-            <FieldCard label="Bio" value={form.bio} onChange={(v) => setForm((f) => ({ ...f, bio: v }))} multiline placeholder="Tell others about yourself..." />
-            <FieldCard label="Age" value={form.age} onChange={(v) => setForm((f) => ({ ...f, age: v }))} keyboardType="numeric" placeholder="Your age" />
-            <FieldCard label="City" value={form.city} onChange={(v) => setForm((f) => ({ ...f, city: v }))} placeholder="Your city" />
-            <FieldCard label="Interests (comma-separated)" value={form.interests} onChange={(v) => setForm((f) => ({ ...f, interests: v }))} placeholder="e.g. hiking, music, travel" />
+          {/* Sub-tabs: About / Gallery */}
+          <View style={styles.tabs}>
+            {(['about', 'gallery'] as const).map((t) => (
+              <TouchableOpacity
+                key={t}
+                style={[styles.tabBtn, tab === t && styles.tabBtnActive]}
+                onPress={() => setTab(t)}
+              >
+                <Text
+                  style={[styles.tabText, tab === t && styles.tabTextActive]}
+                >
+                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
+
+          {tab === 'about' ? (
+            <View style={styles.aboutSection}>
+              <InfoRow
+                icon="person-outline"
+                label="Username"
+                value={me?.username}
+              />
+              <InfoRow icon="mail-outline" label="Email" value={me?.email} />
+
+              <InfoRow
+                icon="calendar-outline"
+                label="Age"
+                value={
+                  me?.profile?.age ? `${me.profile.age} years old` : undefined
+                }
+                placeholder="Not set"
+              />
+
+              <InfoRow
+                icon="location-outline"
+                label="City"
+                value={me?.profile?.city}
+                placeholder="Not set"
+              />
+
+              {/* Bio */}
+              <View style={styles.bioBox}>
+                <Text style={styles.fieldLabel}>Bio</Text>
+                {me?.profile?.bio ? (
+                  <Text style={styles.bioText}>{me.profile.bio}</Text>
+                ) : (
+                  <TouchableOpacity onPress={() => router.push('/edit-profile')}>
+                    <Text style={styles.emptyText}>
+                      No bio yet. Tap to add one ✏️
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              {/* Interests */}
+              <View style={styles.bioBox}>
+                <Text style={styles.fieldLabel}>Interests</Text>
+                {me?.profile?.interests?.length ? (
+                  <View style={styles.tags}>
+                    {me.profile.interests.map((interest: string) => (
+                      <View key={interest} style={styles.tag}>
+                        <Text style={styles.tagText}>{interest}</Text>
+                      </View>
+                    ))}
+                  </View>
+                ) : (
+                  <TouchableOpacity onPress={() => router.push('/edit-profile')}>
+                    <Text style={styles.emptyText}>
+                      No interests added yet. Tap to add some ✏️
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              {!hasAnyProfileData && (
+                <View style={styles.emptyState}>
+                  <Ionicons
+                    name="person-circle-outline"
+                    size={48}
+                    color="#FFD6E0"
+                  />
+                  <Text style={styles.emptyStateTitle}>Your profile is empty</Text>
+                  <Text style={styles.emptyStateSubtitle}>
+                    Add your bio, age, city and interests so others can get to
+                    know you.
+                  </Text>
+                </View>
+              )}
+            </View>
+          ) : (
+            <View style={styles.gallery}>
+              {(me?.profile?.photos ?? []).map((uri: string, i: number) => (
+                <Image key={i} source={{ uri }} style={styles.galleryImg} />
+              ))}
+
+              {(!me?.profile?.photos || me.profile.photos.length === 0) && (
+                <Text style={styles.noPhotos}>
+                  No photos yet. Edit your profile to add some!
+                </Text>
+              )}
+            </View>
+          )}
+
+          <TouchableOpacity
+            style={styles.editBtn}
+            onPress={() => router.push('/edit-profile')}
+          >
+            <Text style={styles.editBtnText}>Edit Profile</Text>
+          </TouchableOpacity>
         </ScrollView>
       )}
-    </SafeAreaView>
+
+      <Navigation activeTab={activeTab} onTabPress={handleTabPress} />
+    </View>
   );
 }
 
-function FieldCard({ label, value, onChange, placeholder, multiline, keyboardType }: any) {
+function InfoRow({
+  icon,
+  label,
+  value,
+  placeholder,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  value?: string | number;
+  placeholder?: string;
+}) {
+  const displayValue = value ?? placeholder;
+  if (!displayValue) return null;
+
   return (
-    <View style={styles.fieldCard}>
-      <Text style={styles.fieldLabel}>{label}</Text>
-      <TextInput
-        value={value}
-        onChangeText={onChange}
-        style={[styles.fieldInput, multiline && { height: 90, textAlignVertical: 'top' }]}
-        placeholder={placeholder}
-        placeholderTextColor="#9CA3AF"
-        multiline={multiline}
-        keyboardType={keyboardType ?? 'default'}
-        autoCapitalize="none"
-      />
+    <View style={styles.infoRow}>
+      <Ionicons name={icon} size={18} color="#aaa" />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.fieldLabel}>{label}</Text>
+        <Text style={value ? styles.infoValue : styles.infoValueEmpty}>
+          {displayValue}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -123,32 +294,148 @@ const styles = StyleSheet.create({
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+    backgroundColor: '#fff',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#F3F4F6',
+  },
+  title: { fontSize: 22, fontWeight: '800', color: '#111' },
+  editIcon: { padding: 4 },
+  content: {},
+  avatarSection: { alignItems: 'center', paddingTop: 24, paddingBottom: 16 },
+  avatar: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    marginBottom: 12,
+    borderWidth: 3,
+    borderColor: '#FFD6E0',
+  },
+  name: { fontSize: 22, fontWeight: '700', color: '#111', marginBottom: 4 },
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    marginBottom: 14,
+  },
+  location: { fontSize: 13, color: '#888' },
+  statsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 14,
+    backgroundColor: '#FFF5F7',
+    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+  },
+  statItem: { flex: 1, alignItems: 'center' },
+  statNum: { fontSize: 20, fontWeight: '800', color: PINK },
+  statLabel: { fontSize: 12, color: '#888', marginTop: 2 },
+  statDivider: {
+    width: 1,
+    height: 32,
+    backgroundColor: '#FFD6E0',
+    marginHorizontal: 16,
+  },
+  planBadge: {
+    backgroundColor: '#F3F4F6',
+    paddingHorizontal: 14,
+    paddingVertical: 5,
+    borderRadius: 99,
+  },
+  planBadgePro: {
+    backgroundColor: '#FFF0F5',
+    borderWidth: 1,
+    borderColor: PINK,
+  },
+  planBadgeText: { fontSize: 12, fontWeight: '700', color: PINK },
+  tabs: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#F3F4F6',
   },
-  headerBtn: { padding: 4 },
-  headerTitle: { fontSize: 17, fontWeight: '700', color: '#111' },
-  saveBtn: { paddingHorizontal: 14, paddingVertical: 6, backgroundColor: PINK, borderRadius: 99 },
-  saveText: { color: '#fff', fontWeight: '700', fontSize: 14 },
-  content: { paddingBottom: 40 },
-  avatarWrap: { alignItems: 'center', paddingVertical: 24 },
-  avatarFrame: { position: 'relative' },
-  avatar: { width: 100, height: 100, borderRadius: 50 },
-  cameraBtn: {
-    position: 'absolute', bottom: 0, right: 0,
-    backgroundColor: PINK, width: 32, height: 32, borderRadius: 16,
-    alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#fff',
+  tabBtn: { flex: 1, paddingVertical: 12, alignItems: 'center' },
+  tabBtnActive: { borderBottomWidth: 2, borderBottomColor: PINK },
+  tabText: { fontSize: 14, fontWeight: '600', color: '#aaa' },
+  tabTextActive: { color: PINK },
+  aboutSection: { paddingHorizontal: 20, paddingTop: 14 },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#F3F4F6',
   },
-  fields: { paddingHorizontal: 20 },
-  fieldCard: { marginBottom: 16 },
-  fieldLabel: { fontSize: 12, fontWeight: '600', color: '#888', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 },
-  fieldInput: {
-    borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 12,
-    paddingHorizontal: 14, paddingVertical: 12,
-    fontSize: 15, color: '#111',
+  fieldLabel: {
+    fontSize: 11,
+    color: '#bbb',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    marginBottom: 3,
   },
+  infoValue: { fontSize: 15, color: '#222' },
+  infoValueEmpty: { fontSize: 15, color: '#ccc', fontStyle: 'italic' },
+  bioBox: {
+    paddingVertical: 14,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#F3F4F6',
+  },
+  bioText: { fontSize: 15, color: '#444', lineHeight: 22 },
+  emptyText: {
+    fontSize: 14,
+    color: '#ccc',
+    fontStyle: 'italic',
+    marginTop: 4,
+  },
+  tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 6 },
+  tag: {
+    backgroundColor: '#FFF0F5',
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 99,
+    borderWidth: 1,
+    borderColor: '#FFD6E0',
+  },
+  tagText: { fontSize: 13, color: PINK, fontWeight: '600' },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: 32,
+    gap: 8,
+  },
+  emptyStateTitle: { fontSize: 16, fontWeight: '700', color: '#aaa' },
+  emptyStateSubtitle: {
+    fontSize: 13,
+    color: '#bbb',
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  gallery: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 16,
+    paddingTop: 14,
+    gap: 4,
+  },
+  galleryImg: { width: '31.5%', aspectRatio: 1, borderRadius: 10 },
+  noPhotos: {
+    fontSize: 14,
+    color: '#bbb',
+    textAlign: 'center',
+    paddingVertical: 32,
+    width: '100%',
+  },
+  editBtn: {
+    marginHorizontal: 20,
+    marginTop: 24,
+    backgroundColor: PINK,
+    borderRadius: 99,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  editBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
 });

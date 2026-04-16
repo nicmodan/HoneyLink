@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 import { router } from "expo-router";
 import React, { useState } from "react";
 import Navigation from "./navigation";
@@ -42,3 +44,4 @@ export default function HomeScreen() {
     </View>
   );
 }
+>>>>>>> ed01e430a4991e9820c23cbcc243ae279088c535

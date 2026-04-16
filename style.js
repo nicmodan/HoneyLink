@@ -1,7 +1,8 @@
-import { Platform, StatusBar, StyleSheet } from "react-native";
+import { Platform, StatusBar, StyleSheet, ViewStyle } from "react-native";
 
-const styles =  StyleSheet.create({
-  
+import { INNER_WIDTH, GRID_SPACING, TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT } from "./constants/layout"
+const styles = StyleSheet.create({
+
   // NOTE!!!: Group 1 Places your styles here
   background: {
     flex: 1,
@@ -23,6 +24,7 @@ const styles =  StyleSheet.create({
       default: 24,
     }),
   },
+
   displayText: {
     maxWidth: 240,
     marginBottom: 28,
@@ -60,7 +62,7 @@ const styles =  StyleSheet.create({
     fontWeight: "700",
     color: "#3A3A3A",
   },
-  
+
   // ------------------Group 1 styles End-------------------
 
 
@@ -115,7 +117,81 @@ const styles =  StyleSheet.create({
     color: '#666',
     marginTop: 13,
   },
-  
+
+  // Header Profile Content Styles - by DARE
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+
+  profileTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    left: 10,
+  },
+
+  editButton: {
+    fontSize: 16,
+    color: '#888',
+    left: 10,
+  },
+
+  profileContainer: {
+    backgroundColor: '#fff',
+    paddingTop: 10,
+    paddingBottom: 20,
+    alignItems: 'center'
+  },
+
+  profileContent: {
+    flex: 1,
+    minHeight: 0,
+  },
+
+  profileName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+  },
+
+  profileLocation: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 5,
+  },
+
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+
+  // Match Header styles - by DARE
+  matchHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  matchHeaderTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#000',
+    textAlign: 'center',
+  },
+  matchBackButton: {
+    padding: 5,
+  },
+
   // Email Password Login Section Styles - Micah
   formContainer: {
     width: '100%',
@@ -141,7 +217,7 @@ const styles =  StyleSheet.create({
 
   input: {
     fontSize: 16,
-    color: '#1F2937',
+    color: '#2e2e2e',
     flex: 1,
   },
 
@@ -158,7 +234,74 @@ const styles =  StyleSheet.create({
     fontWeight: '600',
   },
 
+  backButton2: {
+    marginLeft: -20
+  },
+
+  // Profile Stat styles - by Micah
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    gap: 40,
+  },
+
+  stat: {
+    alignItems: 'center'
+  },
+
+  statNumber: {
+    color: '#ff4d6d',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+
+  statLabel: {
+    color: '#666',
+  },
+
+  // Overlapping Profiles styles - by Micah
+  profileWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative', // Necessary for absolute children
+  },
+
+  profileImageP: {
+    borderWidth: 3,
+    borderColor: '#fff', // Creates the "cutout" look
+  },
+
+  heartContainer: {
+    position: 'absolute',
+    backgroundColor: '#FF2D55',
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#fff',
+    elevation: 3, // Shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  heartText: {
+    fontSize: 16,
+  },
+
   // Social Login Section Styles - by Ifunanya
+
+  containerGallery: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+
   socialLoginContainer: {
     width: '100%',
     paddingVertical: 16,
@@ -244,6 +387,157 @@ const styles =  StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+
+  // Profile Gallery styles - by Ifunanya
+  tabView: {
+    flex: 1,
+  },
+
+  tabBar: {
+    backgroundColor: '#fff',
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    paddingHorizontal: 0,
+
+  },
+
+  tabIndicator: {
+    backgroundColor: '#ff2b78',
+    height: 3,
+    borderRadius: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+    width: 65,
+    marginLeft: 48,
+  },
+
+  tabLabel: {
+    fontSize: 16,
+    textTransform: 'none',
+    fontWeight: '600',
+  },
+
+  tabItem: {
+    width: 'auto',
+    paddingHorizontal: 6,
+  },
+
+  about: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+
+  aboutText: {
+    fontSize: 15,
+    color: '#666',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+
+  inner: {
+    flex: 1,
+    width: INNER_WIDTH,
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    borderRadius: 18,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOpacity: 0.10,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 5,
+  },
+
+  // ── Grid ──────────────────────────────────────────────
+  grid: {
+    // Match TILE_SIZE math: outer padding (2*4) + tile margins (6*4) = GRID_SPACING*(COLUMNS+1)
+    paddingHorizontal: GRID_SPACING / 2,
+    paddingTop: 14,
+    paddingBottom: 14,
+  },
+
+  gridFill: {
+    flexGrow: 1,
+  },
+
+  galleryList: {
+    flex: 1,
+  },
+
+  tile: {
+    width: TILE_SIZE,
+    height: TILE_SIZE * 1.05,
+    borderRadius: 14,
+    overflow: 'hidden',
+    margin: GRID_SPACING / 2,
+  },
+
+  tileImage: {
+    width: '100%',
+    height: '100%',
+  },
+
+  // ── Full-screen viewer ────────────────────────────────
+  viewerContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+
+  viewerSlide: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  viewerImage: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  },
+
+  closeBtn: {
+    position: 'absolute',
+    top: 48,
+    right: 20,
+    zIndex: 10,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  closeText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+
+  // Match Congrats section by Infunanya
+  titleMC: {
+    color: '#FF3B7C',
+    fontSize: 34,
+    fontWeight: '800',
+    lineHeight: 40,
+    textAlign: 'center',
+    letterSpacing: -0.4,
+    marginBottom: 20,
+  },
+
+  subtitleMC: {
+    color: '#A3A3A3',
+    fontSize: 17,
+    fontWeight: '400',
+    lineHeight: 24,
+    textAlign: 'center',
+    maxWidth: 320,
+  },
+
 
   // ------------------Group 2 styles End-------------------
 
@@ -398,9 +692,14 @@ const styles =  StyleSheet.create({
     backgroundColor: "#FF4D6D",
     width: 60,
     height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#ff4d6d',
+    shadowColor: '#000',
+    shadowOpacity: 0.35,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
     elevation: 5,
     zIndex: 2,
   },

@@ -238,3 +238,73 @@ export const SUBSCRIBE = gql`
     }
   }
 `;
+
+// ─── Follow / Unfollow ────────────────────────────────────────────────────────
+
+export const GET_USER_PROFILE = gql`
+  query GetUserProfile($userId: ID!) {
+    userProfile(userId: $userId) {
+      id
+      username
+      isFollowing
+      followerCount
+      followingCount
+      profile {
+        bio
+        age
+        city
+        interests
+        photos
+      }
+      subscription {
+        plan
+        status
+      }
+    }
+  }
+`;
+
+export const FOLLOW_USER = gql`
+  mutation FollowUser($userId: ID!) {
+    followUser(userId: $userId) {
+      id
+      isFollowing
+      followerCount
+    }
+  }
+`;
+
+export const UNFOLLOW_USER = gql`
+  mutation UnfollowUser($userId: ID!) {
+    unfollowUser(userId: $userId) {
+      id
+      isFollowing
+      followerCount
+    }
+  }
+`;
+
+export const ME_WITH_COUNTS = gql`
+  query MeWithCounts {
+    me {
+      id
+      username
+      email
+      isVerified
+      followerCount
+      followingCount
+      profile {
+        bio
+        age
+        city
+        interests
+        photos
+      }
+      subscription {
+        plan
+        status
+        expiresAt
+      }
+    }
+  }
+`;
