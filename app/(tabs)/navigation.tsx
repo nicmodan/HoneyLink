@@ -15,7 +15,12 @@ const GREY = '#999';
 const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const bottomPad = Platform.OS === 'ios' ? Math.max(insets.bottom, 8) : 8;
+
+  // FIX: respect insets.bottom on BOTH Android and iOS.
+  // On Android with gesture nav, insets.bottom can be 24–48px.
+  // On Android with 3-button nav, it's typically 48px+.
+  // We add a small extra buffer (4px) so it never feels cramped.
+  const bottomPad = Math.max(insets.bottom, Platform.OS === 'ios' ? 16 : 4) + 4;
   const barHeight = 60 + bottomPad;
 
   const go = (tab: string) => {
@@ -39,7 +44,7 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
         <Ionicons name="heart-outline" size={24} color={color('favorites')} />
       </TouchableOpacity>
 
-      {/* Centre FAB placeholder — actual button is absolutely positioned */}
+      {/* Centre FAB placeholder */}
       <View style={styles.fabPlaceholder} />
 
       {/* Right two tabs */}
@@ -50,9 +55,9 @@ const Navigation: React.FC<Props> = ({ activeTab, onTabPress }) => {
         <Ionicons name="person-outline" size={24} color={color('profile')} />
       </TouchableOpacity>
 
-      {/* Centred floating button */}
+      {/* Centred floating button — positioned relative to the icon row, not the padding */}
       <TouchableOpacity
-        style={[styles.fab, { bottom: bottomPad + 8 }]}
+        style={[styles.fab, { bottom: bottomPad + 6 }]}
         onPress={() => go('add')}
         activeOpacity={0.85}>
         <Ionicons name="play" size={26} color="#fff" />
@@ -73,6 +78,9 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#ddd',
     paddingHorizontal: 8,
+    // Elevation so it always sits above screen content
+    elevation: 8,
+    zIndex: 100,
   },
   tab: {
     flex: 1,
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF4D6D',
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 6,
+    elevation: 10,
     shadowColor: '#FF4D6D',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.35,
