@@ -671,41 +671,25 @@ const styles = StyleSheet.create({
     marginLeft: 85,
   },
 
-  // ------------------Group 3 styles End-------------------
-
-  // NOTE!!!: Group 4 Places your styles here
-  navigationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 16,
-    left: 16,
-    right: 16,
-    height: 64,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#fff',
-    borderRadius: 32,
-    paddingHorizontal: 24,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
-    ...Platform.select({
-      ios: {
-        paddingBottom: 0,
-      },
-      android: {
-        paddingBottom: 0,
-      }
-    })
+  navigationContainer:{
+    position: "absolute",
+    bottom: 0,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    left: 0,
+    right: 0,
+    height: 66,
+    backgroundColor: "#fff",
+    borderTopWidth: 0.5,
+    borderColor: "#ddd",
+    paddingHorizontal: 40,
   },
-
   fab: {
-    position: 'relative',
-    bottom: 16,
+    position: "absolute",
+    left: "50%",
+    marginLeft: -30,
+    backgroundColor: "#FF4D6D",
     width: 60,
     height: 60,
     alignItems: 'center',
@@ -717,88 +701,546 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
     elevation: 5,
+    zIndex: 2,
   },
 
-  linkText: {
-    marginTop: 20,
-    color: '#ff2b78',
+  profileScreen: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+
+  profileHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingTop: Platform.OS === "android" ? 14 : 6,
+    paddingBottom: 12,
+  },
+
+  profileHeaderButton: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profileHeaderTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#111827",
+  },
+
+  profileEditButton: {
+    minWidth: 36,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+
+  profileEditText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#111827",
+  },
+
+  profileContent: {
+    paddingHorizontal: 24,
+    paddingTop: 8,
+    paddingBottom: 130,
+  },
+
+  profileAvatarSection: {
+    alignItems: "center",
+    marginBottom: 26,
+  },
+
+  profileAvatar: {
+    width: 92,
+    height: 92,
+    borderRadius: 46,
+    marginBottom: 14,
+  },
+
+  profileName: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 6,
+  },
+
+  profileLocation: {
     fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
+    color: "#9CA3AF",
   },
 
-  authButtonDisabled: {
-    opacity: 0.7,
+  profileStatsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 30,
+    paddingHorizontal: 10,
   },
 
+  profileStatBlock: {
+    alignItems: "center",
+    flex: 1,
+  },
+
+  profileStatValue: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#FF4D6D",
+    marginBottom: 4,
+  },
+
+  profileStatLabel: {
+    fontSize: 13,
+    color: "#6B7280",
+  },
+
+  profileTabsRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 32,
+    marginBottom: 22,
+  },
+
+  profileTabButton: {
+    alignItems: "center",
+    minWidth: 70,
+  },
+
+  profileTabText: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: "#9CA3AF",
+  },
+
+  profileTabTextActive: {
+    color: "#111827",
+    fontWeight: "700",
+  },
+
+  profileTabUnderline: {
+    marginTop: 8,
+    width: 34,
+    height: 3,
+    borderRadius: 999,
+    backgroundColor: "#FF4D6D",
+  },
+
+  profileAboutCard: {
+    backgroundColor: "#FFF5F8",
+    borderRadius: 22,
+    padding: 20,
+  },
+
+  profileAboutTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 10,
+  },
+
+  profileAboutText: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: "#4B5563",
+  },
+
+  profileGalleryGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: 12,
+  },
+
+  profileGalleryImage: {
+    width: "31%",
+    aspectRatio: 1,
+    borderRadius: 16,
+  },
+
+  profileDetailsScreen: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+
+  profileDetailsHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 24,
+    paddingTop: Platform.OS === "android" ? (StatusBar.currentHeight ?? 0) + 6 : 10,
+    paddingBottom: 10,
+  },
+
+  profileDetailsHeaderButton: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profileDetailsHeaderTitle: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#111827",
+  },
+
+  profileDetailsSaveButton: {
+    minWidth: 40,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+
+  profileDetailsSaveText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#FF4D6D",
+  },
+
+  profileDetailsContent: {
+    paddingHorizontal: 24,
+    paddingTop: 20,
+    paddingBottom: 90,
+  },
+
+  profileDetailsAvatarWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 24,
+  },
+
+  profileDetailsAvatarFrame: {
+    position: "relative",
+    width: 96,
+    height: 96,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profileDetailsAvatar: {
+    width: 94,
+    height: 94,
+    borderRadius: 47,
+  },
+
+  profileDetailsCameraButton: {
+    position: "absolute",
+    right: -4,
+    bottom: 8,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: "#FF4D6D",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 3,
+    borderColor: "#FFFFFF",
+  },
+
+  profileDetailsFields: {
+    gap: 0,
+  },
+
+  profileDetailsFieldCard: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E7EB",
+    paddingTop: 12,
+    paddingBottom: 20,
+  },
+
+  profileDetailsFieldLabel: {
+    fontSize: 13,
+    color: "#9CA3AF",
+    marginBottom: 10,
+  },
+
+  profileDetailsFieldValue: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#111827",
+  },
+
+  profileDetailsFieldInput: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#111827",
+    paddingVertical: 0,
+    minHeight: 24,
+  },
+
+  defaultProfileScreen: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: Platform.OS === "android" ? 40 : 50,
+  },
+
+  defaultProfileHeaderContainer: {
+    backgroundColor: "#fff",
+    paddingTop: 10,
+    paddingBottom: 20,
+    alignItems: "center",
+  },
+
+  defaultProfileHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+
+  defaultProfileBackButton: {
+    marginLeft: -20,
+  },
+
+  defaultProfileTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333",
+    left: 10,
+  },
+
+  defaultProfileEditButton: {
+    fontSize: 16,
+    color: "#888",
+    left: 10,
+  },
+
+  defaultProfileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+
+  defaultProfileName: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333",
+  },
+
+  defaultProfileLocation: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 5,
+  },
+
+  defaultProfileStatsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+    gap: 40,
+  },
+
+  defaultProfileStat: {
+    alignItems: "center",
+  },
+
+  defaultProfileStatNumber: {
+    color: "#ff4d6d",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+
+  defaultProfileStatLabel: {
+    color: "#666",
+  },
+
+  defaultProfileContent: {
+    flex: 1,
+    minHeight: 0,
+  },
+
+  defaultProfileTabRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 28,
+    paddingTop: 8,
+    paddingBottom: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+
+  defaultProfileTabButton: {
+    alignItems: "center",
+    minWidth: 72,
+  },
+
+  defaultProfileTabText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#999",
+  },
+
+  defaultProfileTabTextActive: {
+    color: "#333",
+  },
+
+  defaultProfileTabIndicator: {
+    marginTop: 8,
+    height: 3,
+    width: 65,
+    borderRadius: 20,
+    backgroundColor: "#ff2b78",
+  },
+
+  defaultProfileAbout: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 24,
+  },
+
+  defaultProfileAboutText: {
+    fontSize: 15,
+    color: "#666",
+    textAlign: "center",
+    lineHeight: 22,
+  },
+
+  defaultProfileGalleryWrapper: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+
+  defaultProfileInner: {
+    flex: 1,
+    width: "100%",
+    backgroundColor: "#fff",
+    alignSelf: "center",
+    borderRadius: 18,
+    overflow: "hidden",
+  },
+
+  defaultProfileGalleryList: {
+    flex: 1,
+  },
+
+  defaultProfileGrid: {
+    paddingHorizontal: 5,
+    paddingTop: 14,
+    paddingBottom: 120,
+  },
+
+  defaultProfileTile: {
+    width: "30.5%",
+    aspectRatio: 0.95,
+    borderRadius: 14,
+    overflow: "hidden",
+    margin: 5,
+  },
+
+  defaultProfileTileImage: {
+    width: "100%",
+    height: "100%",
+  },
+
+  defaultProfileViewerContainer: {
+    flex: 1,
+    backgroundColor: "#000",
+  },
+
+  defaultProfileViewerSlide: {
+    width: 360,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  defaultProfileViewerImage: {
+    width: 360,
+    height: "100%",
+  },
+
+  defaultProfileCloseBtn: {
+    position: "absolute",
+    top: 48,
+    right: 20,
+    zIndex: 10,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  defaultProfileCloseText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
+  // Popup / Modal styles (used in LoginUI)
   popupOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(17, 24, 39, 0.45)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 24,
+    backgroundColor: "rgba(0,0,0,0.45)",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   popupCard: {
-    width: '100%',
-    maxWidth: 340,
-    backgroundColor: '#fff',
-    borderRadius: 24,
-    paddingHorizontal: 24,
-    paddingVertical: 28,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.14,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 8 },
+    width: "82%",
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 28,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
     elevation: 10,
   },
 
   popupTitle: {
-    fontSize: 22,
-    fontWeight: '700',
-    marginBottom: 12,
-    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 10,
+    textAlign: "center",
   },
 
   popupTitleSuccess: {
-    color: '#0F9D58',
+    color: "#22C55E",
   },
 
   popupTitleError: {
-    color: '#D93025',
+    color: "#EF4444",
   },
 
   popupMessage: {
-    fontSize: 15,
-    color: '#4B5563',
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 24,
+    fontSize: 14,
+    color: "#4B5563",
+    textAlign: "center",
+    lineHeight: 20,
+    marginBottom: 20,
   },
 
   popupButton: {
-    minWidth: 140,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 999,
-    alignItems: 'center',
+    width: "100%",
+    height: 46,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   popupButtonSuccess: {
-    backgroundColor: '#0F9D58',
+    backgroundColor: "#ff2b78",
   },
 
   popupButtonError: {
-    backgroundColor: '#D93025',
+    backgroundColor: "#EF4444",
   },
 
   popupButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 15,
-    fontWeight: '700',
+    fontWeight: "700",
   },
-  // ------------------Group 4 styles End-------------------
 })
 
 export default styles;

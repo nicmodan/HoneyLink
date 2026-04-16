@@ -1,5 +1,15 @@
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../style';
+
+
+function LogIn({ onPress, loading }) {
+  return (
+    <TouchableOpacity style={styles.loginButton} onPress={onPress}>
+      <Text style={styles.loginButtonText}>{loading ? 'Logging in...' : 'Log In'}</Text>
+    </TouchableOpacity>
+  )
+}
 
 function Divider() {
   return (
@@ -34,12 +44,10 @@ function TermsText() {
   return <Text style={styles.termsText}>Terms of Use & Privacy Policy</Text>;
 }
 
-export default function SocialLogin({ onFacebookPress, onGmailPress, onLogin, loading }) {
+export default function SocialLogin({ onFacebookPress, onGmailPress, onLogin, loading = false }) {
   return (
     <View style={styles.socialLoginContainer}>
-      <TouchableOpacity style={styles.loginButton} onPress={onLogin}>
-        <Text style={styles.loginButtonText}>{loading ? 'Logging in...' : 'Log In'}</Text>
-      </TouchableOpacity>
+      <LogIn onPress={onLogin} loading={loading} />
       <Divider />
 
       <FacebookButton onPress={onFacebookPress} />

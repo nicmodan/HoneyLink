@@ -3,12 +3,17 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import styles from '../style';
 import Feather from '@expo/vector-icons/Feather';
 
-const EmailPassword = ({ email, setEmail, password, setPassword }) => {
+const EmailPassword = ({
+  email = '',
+  setEmail = () => {},
+  password = '',
+  setPassword = () => {},
+}) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
     <View style={styles.formContainer}>
-      {/* User Name Input */}
+      {/* Email Input */}
       <View style={styles.inputContainer}>
         <TextInput 
           placeholder="Email or Username" 
