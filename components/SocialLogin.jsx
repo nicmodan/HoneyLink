@@ -1,14 +1,19 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../style';
-
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import styles from "../style";
 
 function LogIn({ onPress, loading }) {
   return (
-    <TouchableOpacity style={styles.loginButton} onPress={onPress}>
-      <Text style={styles.loginButtonText}>{loading ? 'Logging in...' : 'Log In'}</Text>
+    <TouchableOpacity
+      style={[styles.loginButton, loading && styles.disabledButton]}
+      onPress={onPress}
+      disabled={loading}
+    >
+      <Text style={styles.loginButtonText}>
+        {loading ? "Logging in..." : "Log In"}
+      </Text>
     </TouchableOpacity>
-  )
+  );
 }
 
 function Divider() {
@@ -23,7 +28,10 @@ function Divider() {
 
 function FacebookButton({ onPress }) {
   return (
-    <TouchableOpacity style={[styles.socialButton, styles.facebook]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.socialButton, styles.facebook]}
+      onPress={onPress}
+    >
       <View style={styles.facebookContent}>
         <Text style={styles.facebookIcon}>f</Text>
         <Text style={styles.buttonText}>Sign up with Facebook</Text>
@@ -34,7 +42,10 @@ function FacebookButton({ onPress }) {
 
 function GmailButton({ onPress }) {
   return (
-    <TouchableOpacity style={[styles.socialButton, styles.gmail]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.socialButton, styles.gmail]}
+      onPress={onPress}
+    >
       <Text style={styles.gmailText}>Sign up with Gmail</Text>
     </TouchableOpacity>
   );
@@ -44,7 +55,12 @@ function TermsText() {
   return <Text style={styles.termsText}>Terms of Use & Privacy Policy</Text>;
 }
 
-export default function SocialLogin({ onFacebookPress, onGmailPress, onLogin, loading = false }) {
+export default function SocialLogin({
+  onFacebookPress,
+  onGmailPress,
+  onLogin,
+  loading = false,
+}) {
   return (
     <View style={styles.socialLoginContainer}>
       <LogIn onPress={onLogin} loading={loading} />

@@ -44,6 +44,42 @@ type MeData = {
   me?: { id: string };
 };
 
+const MOCK_CHATS: ChatListItem[] = [
+  {
+    id: 'mock-chat-1',
+    participants: [
+      { id: 'me-temp', username: 'You' },
+      { id: 'u-favour', username: 'Favour', profile: { photos: [] } },
+    ],
+    lastMessage: {
+      text: 'Hey, are we still on for tonight?',
+      createdAt: new Date().toISOString(),
+    },
+  },
+  {
+    id: 'mock-chat-2',
+    participants: [
+      { id: 'me-temp', username: 'You' },
+      { id: 'u-divine', username: 'Divine' },
+    ],
+    lastMessage: {
+      text: 'I just saw your profile update.',
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(),
+    },
+  },
+  {
+    id: 'mock-chat-3',
+    participants: [
+      { id: 'me-temp', username: 'You' },
+      { id: 'u-micah', username: 'Micah', profile: { photos: [] } },
+    ],
+    lastMessage: {
+      text: 'Let us catch up later this week.',
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
+    },
+  },
+];
+
 function formatLastTime(iso?: string): string {
   if (!iso) return '';
 
@@ -92,7 +128,7 @@ export default function ChatListScreen() {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState('chatlist');
   const { data: meData } = useQuery<MeData>(ME_WITH_COUNTS);
-  const myId = meData?.me?.id;
+  const myId = meData?.me?.id ?? 'me-temp';
 
   const { data, loading, startPolling, stopPolling } = useQuery<ChatListData>(CHAT_LIST, {
     variables: { limit: 30 },
@@ -103,7 +139,8 @@ export default function ChatListScreen() {
     return () => stopPolling();
   }, []);
 
-  const chats = data?.chatList ?? [];
+  // TEMP: fall back to mock chats while the backend is down.
+  const chats = data?.chatList?.length ? data.chatList : MOCK_CHATS;
 
   const handleTabPress = (tab: string) => {
     setActiveTab(tab);

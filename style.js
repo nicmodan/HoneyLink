@@ -1,8 +1,13 @@
-import { Platform, StatusBar, StyleSheet, ViewStyle } from "react-native";
+import { Platform, StatusBar, StyleSheet } from "react-native";
 
-import { INNER_WIDTH, GRID_SPACING, TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT } from "./constants/layout"
+import {
+  GRID_SPACING,
+  INNER_WIDTH,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  TILE_SIZE,
+} from "./constants/layout";
 const styles = StyleSheet.create({
-
   // NOTE!!!: Group 1 Places your styles here
   background: {
     flex: 1,
@@ -65,8 +70,6 @@ const styles = StyleSheet.create({
 
   // ------------------Group 1 styles End-------------------
 
-
-
   // NOTE!!!: Group 2 Places your styles here
   container: {
     flex: 1,
@@ -79,18 +82,18 @@ const styles = StyleSheet.create({
 
   // Header Section Styles - by DARE
   headerContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
     paddingTop: 10,
-    width: '100%',
+    width: "100%",
   },
 
   headerContainer2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '58%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "58%",
   },
 
   backButton: {
@@ -100,52 +103,52 @@ const styles = StyleSheet.create({
 
   headerTitle: {
     fontSize: 17,
-    fontWeight: '600',
-    color: '#111',
+    fontWeight: "600",
+    color: "#111",
     marginBottom: 10,
   },
 
   welcomeText: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
     marginTop: 25,
   },
 
   subText: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginTop: 13,
   },
 
   // Header Profile Content Styles - by DARE
   headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
     paddingHorizontal: 20,
     marginBottom: 20,
   },
 
   profileTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
     left: 10,
   },
 
   editButton: {
     fontSize: 16,
-    color: '#888',
+    color: "#888",
     left: 10,
   },
 
   profileContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingTop: 10,
     paddingBottom: 20,
-    alignItems: 'center'
+    alignItems: "center",
   },
 
   profileContent: {
@@ -155,13 +158,13 @@ const styles = StyleSheet.create({
 
   profileName: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
   },
 
   profileLocation: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginTop: 5,
   },
 
@@ -174,19 +177,19 @@ const styles = StyleSheet.create({
 
   // Match Header styles - by DARE
   matchHeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
     paddingHorizontal: 20,
     marginTop: 10,
     marginBottom: 20,
   },
   matchHeaderTitle: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#000',
-    textAlign: 'center',
+    fontWeight: "700",
+    color: "#000",
+    textAlign: "center",
   },
   matchBackButton: {
     padding: 5,
@@ -194,7 +197,7 @@ const styles = StyleSheet.create({
 
   // Email Password Login Section Styles - Micah
   formContainer: {
-    width: '100%',
+    width: "100%",
     marginTop: 40,
     gap: 20,
   },
@@ -203,88 +206,88 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: '#D1D5DB',
-    backgroundColor: '#fff',
+    borderColor: "#D1D5DB",
+    backgroundColor: "#fff",
     paddingHorizontal: 16,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 
   passwordRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 
   input: {
     fontSize: 16,
-    color: '#2e2e2e',
+    color: "#2e2e2e",
     flex: 1,
   },
 
   forgotButton: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: -2,
     marginBottom: 16,
     left: 3,
   },
 
   forgotText: {
-    color: '#ff2b78',
+    color: "#ff2b78",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   backButton2: {
-    marginLeft: -20
+    marginLeft: -20,
   },
 
   // Profile Stat styles - by Micah
   statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 20,
     gap: 40,
   },
 
   stat: {
-    alignItems: 'center'
+    alignItems: "center",
   },
 
   statNumber: {
-    color: '#ff4d6d',
+    color: "#ff4d6d",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   statLabel: {
-    color: '#666',
+    color: "#666",
   },
 
   // Overlapping Profiles styles - by Micah
   profileWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative', // Necessary for absolute children
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative", // Necessary for absolute children
   },
 
   profileImageP: {
     borderWidth: 3,
-    borderColor: '#fff', // Creates the "cutout" look
+    borderColor: "#fff", // Creates the "cutout" look
   },
 
   heartContainer: {
-    position: 'absolute',
-    backgroundColor: '#FF2D55',
+    position: "absolute",
+    backgroundColor: "#FF2D55",
     width: 34,
     height: 34,
     borderRadius: 17,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: 2,
-    borderColor: '#fff',
+    borderColor: "#fff",
     elevation: 3, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
+    shadowColor: "#000", // Shadow for iOS
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -297,95 +300,99 @@ const styles = StyleSheet.create({
 
   containerGallery: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 
   socialLoginContainer: {
-    width: '100%',
+    width: "100%",
     paddingVertical: 16,
     gap: 28,
   },
 
   dividerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
 
   divider: {
     flex: 1,
     height: 1,
-    backgroundColor: '#D1D5DB',
+    backgroundColor: "#D1D5DB",
   },
 
   dividerLabel: {
     fontSize: 15,
-    color: '#6B7280',
+    color: "#6B7280",
   },
 
   socialButton: {
     height: 48,
     borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: -10,
   },
 
   facebook: {
-    backgroundColor: '#3b5998',
+    backgroundColor: "#3b5998",
   },
 
   gmail: {
     borderWidth: 1,
-    borderColor: '#D1D5DB',
-    backgroundColor: '#fff',
+    borderColor: "#D1D5DB",
+    backgroundColor: "#fff",
   },
 
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   facebookContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 10,
   },
 
   facebookIcon: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 
   gmailText: {
-    color: '#1F2937',
+    color: "#1F2937",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   termsText: {
     marginTop: 70,
     fontSize: 12,
-    color: '#6B7280',
-    textAlign: 'center',
+    color: "#6B7280",
+    textAlign: "center",
   },
 
   loginButton: {
     height: 48,
     borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ff2b78',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff2b78",
+  },
+
+  disabledButton: {
+    opacity: 0.7,
   },
 
   loginButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 
   // Profile Gallery styles - by Ifunanya
@@ -394,59 +401,58 @@ const styles = StyleSheet.create({
   },
 
   tabBar: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     elevation: 0,
     shadowOpacity: 0,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
     paddingHorizontal: 0,
-
   },
 
   tabIndicator: {
-    backgroundColor: '#ff2b78',
+    backgroundColor: "#ff2b78",
     height: 3,
     borderRadius: 20,
-    alignSelf: 'center',
-    alignItems: 'center',
+    alignSelf: "center",
+    alignItems: "center",
     width: 65,
     marginLeft: 48,
   },
 
   tabLabel: {
     fontSize: 16,
-    textTransform: 'none',
-    fontWeight: '600',
+    textTransform: "none",
+    fontWeight: "600",
   },
 
   tabItem: {
-    width: 'auto',
+    width: "auto",
     paddingHorizontal: 6,
   },
 
   about: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 24,
   },
 
   aboutText: {
     fontSize: 15,
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
     lineHeight: 22,
   },
 
   inner: {
     flex: 1,
     width: INNER_WIDTH,
-    backgroundColor: '#fff',
-    alignSelf: 'center',
+    backgroundColor: "#fff",
+    alignSelf: "center",
     borderRadius: 18,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOpacity: 0.10,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 4 },
     elevation: 5,
@@ -472,26 +478,26 @@ const styles = StyleSheet.create({
     width: TILE_SIZE,
     height: TILE_SIZE * 1.05,
     borderRadius: 14,
-    overflow: 'hidden',
+    overflow: "hidden",
     margin: GRID_SPACING / 2,
   },
 
   tileImage: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 
   // ── Full-screen viewer ────────────────────────────────
   viewerContainer: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: "#000",
   },
 
   viewerSlide: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   viewerImage: {
@@ -500,53 +506,51 @@ const styles = StyleSheet.create({
   },
 
   closeBtn: {
-    position: 'absolute',
+    position: "absolute",
     top: 48,
     right: 20,
     zIndex: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: "rgba(0,0,0,0.5)",
     borderRadius: 20,
     width: 40,
     height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   closeText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 
   // Match Congrats section by Infunanya
   titleMC: {
-    color: '#FF3B7C',
+    color: "#FF3B7C",
     fontSize: 34,
-    fontWeight: '800',
+    fontWeight: "800",
     lineHeight: 40,
-    textAlign: 'center',
+    textAlign: "center",
     letterSpacing: -0.4,
     marginBottom: 20,
   },
 
   subtitleMC: {
-    color: '#A3A3A3',
+    color: "#A3A3A3",
     fontSize: 17,
-    fontWeight: '400',
+    fontWeight: "400",
     lineHeight: 24,
-    textAlign: 'center',
+    textAlign: "center",
     maxWidth: 320,
   },
 
-
   // ------------------Group 2 styles End-------------------
-
 
   // NOTE!!!: Group 3 has been refactored for clarity and responsiveness.
   // These styles are intended for the SignUp screen.
   signUpContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingHorizontal: 24,
   },
 
@@ -554,8 +558,8 @@ const styles = StyleSheet.create({
   // e.g., <SafeAreaView style={styles.signUpContainer} edges={['top', 'bottom']}>
 
   signUpHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingTop: 16, // Adjust as needed
     marginBottom: 24,
   },
@@ -567,19 +571,19 @@ const styles = StyleSheet.create({
 
   signUpTitle: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1F2937',
+    fontWeight: "bold",
+    color: "#1F2937",
     marginBottom: 8,
   },
 
   signUpSubtitle: {
     fontSize: 16,
-    color: 'gray',
+    color: "gray",
     marginBottom: 32,
   },
 
   signUpForm: {
-    width: '100%',
+    width: "100%",
     gap: 20,
   },
 
@@ -587,17 +591,17 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: '#D1D5DB',
-    backgroundColor: '#fff',
+    borderColor: "#D1D5DB",
+    backgroundColor: "#fff",
     paddingHorizontal: 16,
-    justifyContent: 'center',
-    color: '#aaa'
+    justifyContent: "center",
+    color: "#aaa",
   },
 
   signUpPasswordContainer: {
-    position: 'relative',
-    width: '100%',
-    justifyContent: 'center',
+    position: "relative",
+    width: "100%",
+    justifyContent: "center",
   },
 
   signUpPasswordInput: {
@@ -605,25 +609,25 @@ const styles = StyleSheet.create({
   },
 
   signUpPasswordToggle: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   signUpButton: {
     height: 48,
     borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ff2b78',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff2b78",
     marginTop: 24,
   },
 
   signUpButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     fontSize: 16,
   },
 
@@ -634,44 +638,44 @@ const styles = StyleSheet.create({
 
   signUpTermsText: {
     fontSize: 14,
-    color: 'gray',
-    textAlign: 'center',
+    color: "gray",
+    textAlign: "center",
     lineHeight: 20,
   },
 
   signUpTermsLink: {
-    color: '#ff2b78',
-    fontWeight: 'bold',
+    color: "#ff2b78",
+    fontWeight: "bold",
   },
 
   // Place the footer outside the ScrollView for it to stick to the bottom
   signUpFooter: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 20, // Space from bottom and content
   },
 
   signUpFooterText: {
-    color: 'gray',
+    color: "gray",
     fontSize: 14,
   },
 
   signUpFooterLink: {
-    color: '#ea147c',
-    fontWeight: 'bold',
+    color: "#ea147c",
+    fontWeight: "bold",
     fontSize: 14,
     marginLeft: 4,
   },
 
   headerTitle2: {
     fontSize: 17,
-    fontWeight: '600',
-    color: '#111',
+    fontWeight: "600",
+    color: "#111",
     marginLeft: 85,
   },
 
-  navigationContainer:{
+  navigationContainer: {
     position: "absolute",
     bottom: 0,
     flexDirection: "row",
@@ -692,11 +696,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF4D6D",
     width: 60,
     height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 30,
-    backgroundColor: '#ff4d6d',
-    shadowColor: '#000',
+    backgroundColor: "#ff4d6d",
+    shadowColor: "#000",
     shadowOpacity: 0.35,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
@@ -870,7 +874,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 24,
-    paddingTop: Platform.OS === "android" ? (StatusBar.currentHeight ?? 0) + 6 : 10,
+    paddingTop:
+      Platform.OS === "android" ? (StatusBar.currentHeight ?? 0) + 6 : 10,
     paddingBottom: 10,
   },
 
@@ -1243,126 +1248,124 @@ const styles = StyleSheet.create({
   },
 
   swipeScreen: {
-  flex: 1,
-  backgroundColor: "#fff",
-  paddingTop:
-    Platform.OS === "android"
-      ? (StatusBar.currentHeight ?? 0) + 20
-      : 60,
-  paddingHorizontal: 20,
-},
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop:
+      Platform.OS === "android" ? (StatusBar.currentHeight ?? 0) + 20 : 60,
+    paddingHorizontal: 20,
+  },
 
-swipeHeader: {
-  marginBottom: 18,
-},
+  swipeHeader: {
+    marginBottom: 18,
+  },
 
-swipeTitle: {
-  fontSize: 32,
-  fontWeight: "800",
-  color: "#111827",
-},
+  swipeTitle: {
+    fontSize: 32,
+    fontWeight: "800",
+    color: "#111827",
+  },
 
-swipeSubtitle: {
-  marginTop: 6,
-  fontSize: 15,
-  color: "#888",
-},
+  swipeSubtitle: {
+    marginTop: 6,
+    fontSize: 15,
+    color: "#888",
+  },
 
-swipeCardStack: {
-  flex: 1,
-  alignItems: "center",
-  justifyContent: "center",
-},
+  swipeCardStack: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-swipeCard: {
-  width: "100%",
-  height: 500,
-  borderRadius: 30,
-  overflow: "hidden",
-  backgroundColor: "#FFE4EC",
-},
+  swipeCard: {
+    width: "100%",
+    height: 500,
+    borderRadius: 30,
+    overflow: "hidden",
+    backgroundColor: "#FFE4EC",
+  },
 
-swipeFrontCard: {
-  position: "absolute",
-  zIndex: 2,
-},
+  swipeFrontCard: {
+    position: "absolute",
+    zIndex: 2,
+  },
 
-swipeBackCard: {
-  position: "absolute",
-  width: "92%",
-  height: 480,
-  transform: [{ translateY: 30 }, { scale: 0.96 }],
-  zIndex: 1,
-  opacity: 1,
-},
+  swipeBackCard: {
+    position: "absolute",
+    width: "92%",
+    height: 480,
+    transform: [{ translateY: 30 }, { scale: 0.96 }],
+    zIndex: 1,
+    opacity: 1,
+  },
 
-swipeImage: {
-  flex: 1,
-  justifyContent: "flex-end",
-},
+  swipeImage: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
 
-swipeImageRadius: {
-  borderRadius: 30,
-},
+  swipeImageRadius: {
+    borderRadius: 30,
+  },
 
-swipeOverlay: {
-  ...StyleSheet.absoluteFillObject,
-  backgroundColor: "rgba(0,0,0,0.22)",
-},
+  swipeOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.22)",
+  },
 
-swipeBackOverlay: {
-  ...StyleSheet.absoluteFillObject,
-  backgroundColor: "rgba(0,0,0,0.16)",
-},
+  swipeBackOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.16)",
+  },
 
-swipeProfileInfo: {
-  padding: 22,
-},
+  swipeProfileInfo: {
+    padding: 22,
+  },
 
-swipeProfileName: {
-  fontSize: 32,
-  fontWeight: "800",
-  color: "#fff",
-},
+  swipeProfileName: {
+    fontSize: 32,
+    fontWeight: "800",
+    color: "#fff",
+  },
 
-swipeProfileCountry: {
-  marginTop: 6,
-  fontSize: 15,
-  color: "#F3F4F6",
-},
+  swipeProfileCountry: {
+    marginTop: 6,
+    fontSize: 15,
+    color: "#F3F4F6",
+  },
 
-swipeBackProfileInfo: {
-  padding: 20,
-},
+  swipeBackProfileInfo: {
+    padding: 20,
+  },
 
-swipeBackProfileName: {
-  fontSize: 26,
-  fontWeight: "800",
-  color: "#fff",
-},
+  swipeBackProfileName: {
+    fontSize: 26,
+    fontWeight: "800",
+    color: "#fff",
+  },
 
-swipeBackProfileCountry: {
-  marginTop: 5,
-  fontSize: 14,
-  color: "#F3F4F6",
-},
+  swipeBackProfileCountry: {
+    marginTop: 5,
+    fontSize: 14,
+    color: "#F3F4F6",
+  },
 
-swipeBigButton: {
-  alignSelf: "center",
-  width: "82%",
-  height: 56,
-  borderRadius: 999,
-  backgroundColor: "#FF4D6D",
-  alignItems: "center",
-  justifyContent: "center",
-  marginBottom: 96,
-},
+  swipeBigButton: {
+    alignSelf: "center",
+    width: "82%",
+    height: 56,
+    borderRadius: 999,
+    backgroundColor: "#FF4D6D",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 96,
+  },
 
   swipeBigButtonText: {
-  color: "#fff",
-  fontSize: 16,
-  fontWeight: "800",
-},
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "800",
+  },
 
   header: {
     flexDirection: "row",
@@ -1545,7 +1548,6 @@ swipeBigButton: {
     fontSize: 15,
     fontWeight: "700",
   },
-
-})
+});
 
 export default styles;

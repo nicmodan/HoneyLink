@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Image,
-  KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
-
+import { useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
-import Icon from '@expo/vector-icons/Ionicons';
-import * as ImagePicker from 'expo-image-picker';
-import { useQuery, useMutation } from '@apollo/client/react';
-import { ME, UPDATE_PROFILE } from '../../scripts/graphql';   // ← Make sure this path is correct
+import { Ionicons } from '@expo/vector-icons';
+import { useQuery } from '@apollo/client/react';
+import { useRouter } from 'expo-router';
+
+import { ME_WITH_COUNTS } from '../../scripts/graphql';
+import Navigation from './navigation';
 
 const PINK = '#E8476A';
 
-interface MeData {
+interface MeQueryData {
   me: {
-    id: string;
-    username: string;
-    email: string;
-    profile: {
+    username?: string;
+    email?: string;
+    followerCount?: number;
+    followingCount?: number;
+    subscription?: { status?: string; plan?: string };
+    profile?: {
       bio?: string;
       age?: number;
       city?: string;
@@ -38,275 +38,404 @@ interface MeData {
   };
 }
 
-export default function EditProfileScreen() {
+export default function ProfileScreen() {
+  const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  const { data, loading, refetch } = useQuery<MeData>(ME);
+  const [activeTab, setActiveTab] = useState('profile');
+  const [tab, setTab] = useState<'about' | 'gallery'>('about');
 
-  const [doUpdate, { loading: saving }] = useMutation(UPDATE_PROFILE, {
-    onCompleted: () => {
-      Alert.alert('Success', 'Profile updated successfully!');
+  const { data, loading, refetch } = useQuery<MeQueryData>(ME_WITH_COUNTS, {
+    fetchPolicy: 'network-only',
+  });
+
+  const me = data?.me;
+
+  // Refetch data every time the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
       refetch();
-      router.back();
-    },
-    onError: (err) => Alert.alert('Error', err.message),
-  });
+    }, [refetch])
+  );
 
-  const [form, setForm] = useState({
-    bio: '',
-    age: '',
-    city: '',
-    interests: '',
-  });
-
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
-
-  // Populate form
-  useEffect(() => {
-    if (data?.me?.profile) {
-      const p = data.me.profile;
-      setForm({
-        bio: p.bio ?? '',
-        age: p.age ? String(p.age) : '',
-        city: p.city ?? '',
-        interests: p.interests?.join(', ') ?? '',
-      });
-      setProfilePhoto(p.photos?.[0] || null);
-    }
-  }, [data]);
-
-  // Pick Profile Picture
-  const pickImage = async () => {
-    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!permission.granted) {
-      Alert.alert('Permission Required', 'Please grant photo library access.');
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.8,
-    });
-
-    if (!result.canceled && result.assets[0]) {
-      setProfilePhoto(result.assets[0].uri);
-      // TODO: Later - upload image and send URL in mutation
-    }
+  const handleTabPress = (t: string) => {
+    setActiveTab(t);
+    if (t === 'home') router.push('/homepage');
+    if (t === 'favorites') router.push('/matches');
+    if (t === 'chatlist') router.push('/chatlist');
+    if (t === 'add') router.push('/shorts');
   };
 
-  const handleSave = () => {
-    if (saving) return;
+  const photo =
+    me?.profile?.photos?.[0] ||
+    'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400';
 
-    const parsedAge = parseInt(form.age, 10);
-    if (form.age && (isNaN(parsedAge) || parsedAge < 18 || parsedAge > 100)) {
-      Alert.alert('Invalid Age', 'Age must be between 18 and 100.');
-      return;
-    }
+  const topPad =
+    Platform.OS === 'android'
+      ? (StatusBar.currentHeight ?? 0) + 8
+      : insets.top + 8;
 
-    const input = {
-      bio: form.bio.trim(),
-      city: form.city.trim(),
-      interests: form.interests
-        .split(',')
-        .map((s) => s.trim())
-        .filter(Boolean),
-      ...(form.age ? { age: parsedAge } : {}),
-    };
-
-    doUpdate({ variables: { input } });
-  };
-
-  if (loading) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator color={PINK} size="large" />
-      </View>
-    );
-  }
+  const hasAnyProfileData =
+    me?.profile?.bio ||
+    me?.profile?.age ||
+    me?.profile?.city ||
+    me?.profile?.interests?.length;
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <StatusBar barStyle="dark-content" />
-
+    <View style={styles.screen}>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Pressable onPress={router.back}>
-          <Icon name="chevron-back" size={28} color="#111" />
-        </Pressable>
-        <Text style={styles.headerTitle}>Edit Profile</Text>
-        <Pressable style={styles.saveBtn} onPress={handleSave} disabled={saving}>
-          <Text style={styles.saveText}>{saving ? 'Saving...' : 'Save'}</Text>
-        </Pressable>
+      <View style={[styles.header, { paddingTop: topPad }]}>
+        <Text style={styles.title}>My Profile</Text>
+        <TouchableOpacity
+          onPress={() => router.push('/edit-profile')}
+          style={styles.editIcon}
+        >
+          <Ionicons name="create-outline" size={24} color={PINK} />
+        </TouchableOpacity>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        {/* Profile Picture */}
-        <View style={styles.avatarWrap}>
-          <Pressable onPress={pickImage}>
-            <Image
-              source={{ uri: profilePhoto || 'https://via.placeholder.com/150' }}
-              style={styles.avatar}
-            />
-            <View style={styles.cameraBtn}>
-              <Icon name="camera" size={20} color="#fff" />
+      {loading ? (
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={PINK} />
+        </View>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[styles.content, { paddingBottom: 100 }]}
+        >
+          {/* Avatar + stats */}
+          <View style={styles.avatarSection}>
+            <Image source={{ uri: photo }} style={styles.avatar} />
+            <Text style={styles.name}>{me?.username ?? 'Your Name'}</Text>
+
+            {me?.profile?.city && (
+              <View style={styles.locationRow}>
+                <Ionicons name="location-outline" size={13} color="#888" />
+                <Text style={styles.location}>{me.profile.city}</Text>
+              </View>
+            )}
+
+            {/* Stats */}
+            <View style={styles.statsRow}>
+              <View style={styles.statItem}>
+                <Text style={styles.statNum}>{me?.followerCount ?? 0}</Text>
+                <Text style={styles.statLabel}>Followers</Text>
+              </View>
+              <View style={styles.statDivider} />
+              <View style={styles.statItem}>
+                <Text style={styles.statNum}>{me?.followingCount ?? 0}</Text>
+                <Text style={styles.statLabel}>Following</Text>
+              </View>
             </View>
-          </Pressable>
-          <Text style={styles.avatarHint}>Tap to change profile picture</Text>
-        </View>
 
-        {/* Username (Read-only for now) */}
-        <View style={styles.fieldWrap}>
-          <Text style={styles.fieldLabel}>Username</Text>
-          <Text style={[styles.fieldInput, { color: '#888' }]}>
-            @{data?.me?.username || 'username'}
-          </Text>
-        </View>
+            {/* Subscription badge */}
+            <View
+              style={[
+                styles.planBadge,
+                me?.subscription?.status === 'active' && styles.planBadgePro,
+              ]}
+            >
+              <Text style={styles.planBadgeText}>
+                {me?.subscription?.status === 'active'
+                  ? `${me.subscription.plan?.toUpperCase()} ✨`
+                  : 'FREE'}
+              </Text>
+            </View>
+          </View>
 
-        {/* Bio */}
-        <View style={styles.fieldWrap}>
-          <Text style={styles.fieldLabel}>Bio</Text>
-          <TextInput
-            style={[styles.fieldInput, styles.multilineInput]}
-            value={form.bio}
-            onChangeText={(v) => setForm((f) => ({ ...f, bio: v }))}
-            placeholder="Write something about yourself..."
-            multiline
-            maxLength={300}
-          />
-          <Text style={styles.charCount}>{form.bio.length}/300</Text>
-        </View>
+          {/* Sub-tabs: About / Gallery */}
+          <View style={styles.tabs}>
+            {(['about', 'gallery'] as const).map((t) => (
+              <TouchableOpacity
+                key={t}
+                style={[styles.tabBtn, tab === t && styles.tabBtnActive]}
+                onPress={() => setTab(t)}
+              >
+                <Text
+                  style={[styles.tabText, tab === t && styles.tabTextActive]}
+                >
+                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
 
-        {/* Age */}
-        <View style={styles.fieldWrap}>
-          <Text style={styles.fieldLabel}>Age</Text>
-          <TextInput
-            style={styles.fieldInput}
-            value={form.age}
-            onChangeText={(v) => setForm((f) => ({ ...f, age: v }))}
-            placeholder="25"
-            keyboardType="number-pad"
-            maxLength={3}
-          />
-        </View>
+          {tab === 'about' ? (
+            <View style={styles.aboutSection}>
+              <InfoRow
+                icon="person-outline"
+                label="Username"
+                value={me?.username}
+              />
+              <InfoRow icon="mail-outline" label="Email" value={me?.email} />
 
-        {/* City */}
-        <View style={styles.fieldWrap}>
-          <Text style={styles.fieldLabel}>City</Text>
-          <TextInput
-            style={styles.fieldInput}
-            value={form.city}
-            onChangeText={(v) => setForm((f) => ({ ...f, city: v }))}
-            placeholder="Port Harcourt"
-          />
-        </View>
+              <InfoRow
+                icon="calendar-outline"
+                label="Age"
+                value={
+                  me?.profile?.age ? `${me.profile.age} years old` : undefined
+                }
+                placeholder="Not set"
+              />
 
-        {/* Interests */}
-        <View style={styles.fieldWrap}>
-          <Text style={styles.fieldLabel}>Interests</Text>
-          <TextInput
-            style={styles.fieldInput}
-            value={form.interests}
-            onChangeText={(v) => setForm((f) => ({ ...f, interests: v }))}
-            placeholder="music, travel, photography, gym"
-          />
-          <Text style={styles.fieldHint}>Separate with commas</Text>
-        </View>
+              <InfoRow
+                icon="location-outline"
+                label="City"
+                value={me?.profile?.city}
+                placeholder="Not set"
+              />
 
-        <Pressable style={styles.saveBtnBottom} onPress={handleSave} disabled={saving}>
-          <Text style={styles.saveBtnBottomText}>
-            {saving ? 'Saving Changes...' : 'Save Profile'}
-          </Text>
-        </Pressable>
-      </ScrollView>
-    </KeyboardAvoidingView>
+              {/* Bio */}
+              <View style={styles.bioBox}>
+                <Text style={styles.fieldLabel}>Bio</Text>
+                {me?.profile?.bio ? (
+                  <Text style={styles.bioText}>{me.profile.bio}</Text>
+                ) : (
+                  <TouchableOpacity onPress={() => router.push('/edit-profile')}>
+                    <Text style={styles.emptyText}>
+                      No bio yet. Tap to add one ✏️
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              {/* Interests */}
+              <View style={styles.bioBox}>
+                <Text style={styles.fieldLabel}>Interests</Text>
+                {me?.profile?.interests?.length ? (
+                  <View style={styles.tags}>
+                    {me.profile.interests.map((interest: string) => (
+                      <View key={interest} style={styles.tag}>
+                        <Text style={styles.tagText}>{interest}</Text>
+                      </View>
+                    ))}
+                  </View>
+                ) : (
+                  <TouchableOpacity onPress={() => router.push('/edit-profile')}>
+                    <Text style={styles.emptyText}>
+                      No interests added yet. Tap to add some ✏️
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              {!hasAnyProfileData && (
+                <View style={styles.emptyState}>
+                  <Ionicons
+                    name="person-circle-outline"
+                    size={48}
+                    color="#FFD6E0"
+                  />
+                  <Text style={styles.emptyStateTitle}>Your profile is empty</Text>
+                  <Text style={styles.emptyStateSubtitle}>
+                    Add your bio, age, city and interests so others can get to
+                    know you.
+                  </Text>
+                </View>
+              )}
+            </View>
+          ) : (
+            <View style={styles.gallery}>
+              {(me?.profile?.photos ?? []).map((uri: string, i: number) => (
+                <Image key={i} source={{ uri }} style={styles.galleryImg} />
+              ))}
+
+              {(!me?.profile?.photos || me.profile.photos.length === 0) && (
+                <Text style={styles.noPhotos}>
+                  No photos yet. Edit your profile to add some!
+                </Text>
+              )}
+            </View>
+          )}
+
+          <TouchableOpacity
+            style={styles.editBtn}
+            onPress={() => router.push('/edit-profile')}
+          >
+            <Text style={styles.editBtnText}>Edit Profile</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
+
+      <Navigation activeTab={activeTab} onTabPress={handleTabPress} />
+    </View>
+  );
+}
+
+function InfoRow({
+  icon,
+  label,
+  value,
+  placeholder,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  value?: string | number;
+  placeholder?: string;
+}) {
+  const displayValue = value ?? placeholder;
+  if (!displayValue) return null;
+
+  return (
+    <View style={styles.infoRow}>
+      <Ionicons name={icon} size={18} color="#aaa" />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.fieldLabel}>{label}</Text>
+        <Text style={value ? styles.infoValue : styles.infoValueEmpty}>
+          {displayValue}
+        </Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: '#fff' },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
+    alignItems: 'center',
+    paddingHorizontal: 20,
     paddingBottom: 12,
     backgroundColor: '#fff',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#F0F0F0',
+    borderBottomColor: '#F3F4F6',
   },
-  headerTitle: { fontSize: 17, fontWeight: '700', color: '#111' },
-  saveBtn: {
-    backgroundColor: PINK,
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    borderRadius: 99,
-    minWidth: 70,
-    alignItems: 'center',
-  },
-  saveText: { color: '#fff', fontWeight: '700', fontSize: 14 },
-
-  content: { paddingBottom: 100 },
-
-  avatarWrap: { alignItems: 'center', paddingVertical: 32 },
+  title: { fontSize: 22, fontWeight: '800', color: '#111' },
+  editIcon: { padding: 4 },
+  content: {},
+  avatarSection: { alignItems: 'center', paddingTop: 24, paddingBottom: 16 },
   avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 4,
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    marginBottom: 12,
+    borderWidth: 3,
     borderColor: '#FFD6E0',
   },
-  cameraBtn: {
-    position: 'absolute',
-    bottom: 4,
-    right: 4,
-    backgroundColor: PINK,
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+  name: { fontSize: 22, fontWeight: '700', color: '#111', marginBottom: 4 },
+  locationRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: '#fff',
+    gap: 3,
+    marginBottom: 14,
   },
-  avatarHint: { fontSize: 13, color: '#999', marginTop: 8 },
-
-  fieldWrap: { paddingHorizontal: 20, marginBottom: 24 },
-  fieldLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#888',
-    textTransform: 'uppercase',
-    marginBottom: 6,
-  },
-  fieldInput: {
-    borderWidth: 1.5,
-    borderColor: '#E8E8E8',
-    borderRadius: 14,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 16,
-    backgroundColor: '#FAFAFA',
-  },
-  multilineInput: { height: 110, textAlignVertical: 'top' },
-  charCount: { fontSize: 11, color: '#C4C4C4', textAlign: 'right', marginTop: 4 },
-  fieldHint: { fontSize: 11, color: '#C4C4C4', marginTop: 4 },
-
-  saveBtnBottom: {
-    marginHorizontal: 20,
-    marginTop: 20,
-    backgroundColor: PINK,
+  location: { fontSize: 13, color: '#888' },
+  statsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 14,
+    backgroundColor: '#FFF5F7',
     borderRadius: 16,
-    paddingVertical: 18,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+  },
+  statItem: { flex: 1, alignItems: 'center' },
+  statNum: { fontSize: 20, fontWeight: '800', color: PINK },
+  statLabel: { fontSize: 12, color: '#888', marginTop: 2 },
+  statDivider: {
+    width: 1,
+    height: 32,
+    backgroundColor: '#FFD6E0',
+    marginHorizontal: 16,
+  },
+  planBadge: {
+    backgroundColor: '#F3F4F6',
+    paddingHorizontal: 14,
+    paddingVertical: 5,
+    borderRadius: 99,
+  },
+  planBadgePro: {
+    backgroundColor: '#FFF0F5',
+    borderWidth: 1,
+    borderColor: PINK,
+  },
+  planBadgeText: { fontSize: 12, fontWeight: '700', color: PINK },
+  tabs: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  tabBtn: { flex: 1, paddingVertical: 12, alignItems: 'center' },
+  tabBtnActive: { borderBottomWidth: 2, borderBottomColor: PINK },
+  tabText: { fontSize: 14, fontWeight: '600', color: '#aaa' },
+  tabTextActive: { color: PINK },
+  aboutSection: { paddingHorizontal: 20, paddingTop: 14 },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#F3F4F6',
+  },
+  fieldLabel: {
+    fontSize: 11,
+    color: '#bbb',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    marginBottom: 3,
+  },
+  infoValue: { fontSize: 15, color: '#222' },
+  infoValueEmpty: { fontSize: 15, color: '#ccc', fontStyle: 'italic' },
+  bioBox: {
+    paddingVertical: 14,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#F3F4F6',
+  },
+  bioText: { fontSize: 15, color: '#444', lineHeight: 22 },
+  emptyText: {
+    fontSize: 14,
+    color: '#ccc',
+    fontStyle: 'italic',
+    marginTop: 4,
+  },
+  tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 6 },
+  tag: {
+    backgroundColor: '#FFF0F5',
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 99,
+    borderWidth: 1,
+    borderColor: '#FFD6E0',
+  },
+  tagText: { fontSize: 13, color: PINK, fontWeight: '600' },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: 32,
+    gap: 8,
+  },
+  emptyStateTitle: { fontSize: 16, fontWeight: '700', color: '#aaa' },
+  emptyStateSubtitle: {
+    fontSize: 13,
+    color: '#bbb',
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  gallery: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 16,
+    paddingTop: 14,
+    gap: 4,
+  },
+  galleryImg: { width: '31.5%', aspectRatio: 1, borderRadius: 10 },
+  noPhotos: {
+    fontSize: 14,
+    color: '#bbb',
+    textAlign: 'center',
+    paddingVertical: 32,
+    width: '100%',
+  },
+  editBtn: {
+    marginHorizontal: 20,
+    marginTop: 24,
+    backgroundColor: PINK,
+    borderRadius: 99,
+    paddingVertical: 14,
     alignItems: 'center',
   },
-  saveBtnBottomText: {
-    color: '#fff',
-    fontWeight: '700',
-    fontSize: 16,
-  },
+  editBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
 });

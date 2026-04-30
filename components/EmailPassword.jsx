@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import styles from '../style';
-import Feather from '@expo/vector-icons/Feather';
+import Feather from "@expo/vector-icons/Feather";
+import { useState } from "react";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import styles from "../style";
 
 const EmailPassword = ({
-  email = '',
+  email = "",
   setEmail = () => {},
-  password = '',
+  password = "",
   setPassword = () => {},
 }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -15,27 +15,42 @@ const EmailPassword = ({
     <View style={styles.formContainer}>
       {/* Email Input */}
       <View style={styles.inputContainer}>
-        <TextInput 
-          placeholder="Email" 
+        <TextInput
+          placeholder="Email"
           placeholderTextColor="#666"
-          style={styles.input} 
+          style={styles.input}
           value={email}
           onChangeText={setEmail}
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="email-address"
+          textContentType="emailAddress"
         />
       </View>
 
       {/* Password Input */}
       <View style={[styles.inputContainer, styles.passwordRow]}>
-        <TextInput 
-          placeholder="Password" 
+        <TextInput
+          placeholder="Password"
           placeholderTextColor="#666"
           secureTextEntry={!passwordVisible}
-          style={[styles.input, { flex: 1 }]} 
+          style={[styles.input, { flex: 1 }]}
           value={password}
           onChangeText={setPassword}
+          autoCapitalize="none"
+          autoCorrect={false}
+          textContentType="password"
         />
-        <TouchableOpacity onPress={() => {setPasswordVisible(!passwordVisible)}}>
-          { passwordVisible ? <Feather name="eye" size={24} color="#666" /> : <Feather name="eye-off" size={24} color="#666" /> }
+        <TouchableOpacity
+          onPress={() => {
+            setPasswordVisible(!passwordVisible);
+          }}
+        >
+          {passwordVisible ? (
+            <Feather name="eye" size={24} color="#666" />
+          ) : (
+            <Feather name="eye-off" size={24} color="#666" />
+          )}
         </TouchableOpacity>
       </View>
 
@@ -44,7 +59,7 @@ const EmailPassword = ({
         <Text style={styles.forgotText}>Forgot Password?</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default EmailPassword
+export default EmailPassword;
